@@ -2693,6 +2693,13 @@ button:active{transform:scale(0.96)}
 .glossary-item dt{color:#f0eeea;font-weight:700;font-size:0.86rem;margin-bottom:3px}
 .glossary-item dd{color:#9292a0;font-size:0.82rem;line-height:1.6}
 @media (max-width:640px){.glossary-grid{grid-template-columns:1fr}}
+.role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0 24px}
+.role-card{background:#0f0f12;border:1px solid rgba(255,255,255,0.055);border-left:3px solid var(--accent,#6e6e78);border-radius:0 12px 12px 0;padding:16px 20px;transition:border-color 0.2s,transform 0.2s}
+.role-card:hover{transform:translateY(-2px);border-left-color:var(--accent,#6e6e78)}
+.role-card h3{margin:0 0 8px!important}
+.role-card p{font-size:0.85rem;margin-bottom:8px}
+.role-card ul{margin-bottom:0;font-size:0.82rem}
+@media (max-width:640px){.role-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -2851,61 +2858,50 @@ const GROUPS = [
     sections:[
       {id:'program-wide', title:'4.1 Program-Wide Roles', body:\`
 <p>Most roles operate within a single department. The role below spans the whole team.</p>
-<h3 style="margin-top:14px">Schedule Coordinator &mdash; Team-Wide</h3>
-<p>Quite possibly the unsung hero of the entire program &mdash; keeps everyone pointed at the next big thing coming up.</p>
-<ul><li>Keeps the program calendar up to date</li><li>Tracks meets, events, and competitions</li></ul>\`},
+<div class="role-grid">
+<div class="role-card"><h3>Schedule Coordinator &mdash; Team-Wide</h3><p>Quite possibly the unsung hero of the entire program &mdash; keeps everyone pointed at the next big thing coming up.</p><ul><li>Keeps the program calendar up to date</li><li>Tracks meets, events, and competitions</li></ul></div>
+</div>\`},
       {id:'building-design', title:'4.2 Building and Design Department', body:\`
 <p>Responsible for designing, assembling, and repairing the robot during competition.</p>
-<h3>Builder</h3>
-<p>The core of the design team &mdash; for members who want to get as hands-on as possible.</p>
-<ul>
+<div class="role-grid">
+<div class="role-card"><h3>Builder</h3><p>The core of the design team &mdash; for members who want to get as hands-on as possible.</p><ul>
 <li>Assist in designing and actively building the robot</li>
 <li>Be ready to assist with emergency repairs during competition</li>
 <li>Learn proper techniques on tool usage, and teach others with less experience</li>
-</ul>
-<h3>Engineering Notebook Author (Building &amp; Design)</h3>
-<p>Keeps their department's notebook progressing. No single person writes all of it &mdash; this role makes sure progress keeps happening.</p>
-<ul><li>Continuously maintains documentation during the design process</li><li>Compiles papers, documents, and discussions into an easy-to-digest format</li><li>Works with authors from other departments on the finalized notebook</li></ul>
-<h3>CAD Architect</h3>
-<p>Helps members bring a design to life in CAD.</p>
-<ul><li>Works with the design team to understand mechanics and structure</li><li>Uses CAD software to verify and visualize that the build is sound</li></ul>
-<h3>Compliance Officer</h3>
-<p>Ensures the robot meets all requirements to be considered "legal," using the inspection checklist to guarantee a smooth competition registration.</p>
-<ul><li>Stays familiar with the current season's robot inspection criteria</li><li>Keeps the design team informed of areas of concern</li><li>Confirms the robot is legal before competition</li></ul>\`},
+</ul></div>
+<div class="role-card"><h3>Engineering Notebook Author (Building &amp; Design)</h3><p>Keeps their department's notebook progressing. No single person writes all of it &mdash; this role makes sure progress keeps happening.</p><ul><li>Continuously maintains documentation during the design process</li><li>Compiles papers, documents, and discussions into an easy-to-digest format</li><li>Works with authors from other departments on the finalized notebook</li></ul></div>
+<div class="role-card"><h3>CAD Architect</h3><p>Helps members bring a design to life in CAD.</p><ul><li>Works with the design team to understand mechanics and structure</li><li>Uses CAD software to verify and visualize that the build is sound</li></ul></div>
+<div class="role-card"><h3>Compliance Officer</h3><p>Ensures the robot meets all requirements to be considered "legal," using the inspection checklist to guarantee a smooth competition registration.</p><ul><li>Stays familiar with the current season's robot inspection criteria</li><li>Keeps the design team informed of areas of concern</li><li>Confirms the robot is legal before competition</li></ul></div>
+</div>\`},
       {id:'programming', title:'4.3 Programming Department', body:\`
 <p>Responsible for the brains of the robot &mdash; members typically focus on TeleOp or Autonomous.</p>
-<h3>Programmer</h3>
-<ul>
+<div class="role-grid">
+<div class="role-card"><h3>Programmer</h3><ul>
 <li>Writes code for TeleOp and/or Autonomous</li>
 <li>Provides input on design decisions that affect programming implementation</li>
 <li>Helps troubleshoot and debug other programmers' code</li>
 <li>Documents code clearly enough for other programmers to pick up</li>
-</ul>
-<h3>Engineering Notebook Author (Programming)</h3>
-<ul><li>Continuously maintains documentation during the design process</li><li>Compiles papers, documents, and discussions into an easy-to-digest format</li><li>Works with authors from other departments on the finalized notebook</li></ul>\`},
+</ul></div>
+<div class="role-card"><h3>Engineering Notebook Author (Programming)</h3><ul><li>Continuously maintains documentation during the design process</li><li>Compiles papers, documents, and discussions into an easy-to-digest format</li><li>Works with authors from other departments on the finalized notebook</li></ul></div>
+</div>\`},
       {id:'comms-outreach', title:'4.4 Communications and Outreach Department', body:\`
 <p>Holds the team microphone &mdash; internally and externally. Communications keeps members informed; outreach shows the community what the team is about.</p>
-<h3>Community Manager</h3>
-<ul>
+<div class="role-grid">
+<div class="role-card"><h3>Community Manager</h3><ul>
 <li>Takes photo and video of events, meetings, and competitions</li>
 <li>Explains what FIRST is and how interested people can learn more</li>
 <li>Keeps the community informed on what the team is up to</li>
 <li>Helps coordinate community events</li>
-</ul>\`},
+</ul></div>
+</div>\`},
       {id:'scouting-drive', title:'4.5 Scouting &amp; Drive Team', body:\`
 <p>Represents the team on the field and informs match strategy. Drive Team seats should be earned through practice and demonstrated reliability, not seniority &mdash; run regular practice matches to decide who fills each one.</p>
-<h3>Driver</h3>
-<p>Controls the robot's movement during driver-controlled play. Must know the robot's mechanical limits cold.</p>
-<ul><li>Attends all drive practice sessions</li><li>Communicates constantly with the Operator and Coach during a match</li><li>Stays calm and adapts when a mechanism fails mid-match</li><li>Knows Drive Team etiquette rules in the game manual</li></ul>
-<h3>Operator</h3>
-<p>Controls the robot's secondary mechanisms (arm, intake, lift, etc.) in coordination with the Driver.</p>
-<ul><li>Masters the control scheme for every mechanism</li><li>Calls out game-piece and field state information to the Driver</li><li>Practices failure scenarios &mdash; e.g. a jammed intake &mdash; with the Driver</li></ul>
-<h3>Drive Coach</h3>
-<p>Per FTC rules, the only adult or student allowed to communicate with the Drive Team during a match. Sets match strategy pre-match and relays scouting information.</p>
-<ul><li>Reviews the alliance's and opponents' scouting data before each match</li><li>Sets a clear match plan (autonomous focus, endgame priority, etc.) with the Drive Team beforehand</li><li>Stays within the designated Coach area and follows all field communication rules</li></ul>
-<h3>Scouting Lead</h3>
-<p>Tracks other teams' robot capabilities and match performance throughout an event to inform alliance selection.</p>
-<ul><li>Maintains scouting sheets or app for every team at the event</li><li>Records autonomous reliability, cycle times, and endgame capability per robot</li><li>Briefs team captains before alliance selection with data-backed recommendations</li></ul>\`},
+<div class="role-grid">
+<div class="role-card"><h3>Driver</h3><p>Controls the robot's movement during driver-controlled play. Must know the robot's mechanical limits cold.</p><ul><li>Attends all drive practice sessions</li><li>Communicates constantly with the Operator and Coach during a match</li><li>Stays calm and adapts when a mechanism fails mid-match</li><li>Knows Drive Team etiquette rules in the game manual</li></ul></div>
+<div class="role-card"><h3>Operator</h3><p>Controls the robot's secondary mechanisms (arm, intake, lift, etc.) in coordination with the Driver.</p><ul><li>Masters the control scheme for every mechanism</li><li>Calls out game-piece and field state information to the Driver</li><li>Practices failure scenarios &mdash; e.g. a jammed intake &mdash; with the Driver</li></ul></div>
+<div class="role-card"><h3>Drive Coach</h3><p>Per FTC rules, the only adult or student allowed to communicate with the Drive Team during a match. Sets match strategy pre-match and relays scouting information.</p><ul><li>Reviews the alliance's and opponents' scouting data before each match</li><li>Sets a clear match plan (autonomous focus, endgame priority, etc.) with the Drive Team beforehand</li><li>Stays within the designated Coach area and follows all field communication rules</li></ul></div>
+<div class="role-card"><h3>Scouting Lead</h3><p>Tracks other teams' robot capabilities and match performance throughout an event to inform alliance selection.</p><ul><li>Maintains scouting sheets or app for every team at the event</li><li>Records autonomous reliability, cycle times, and endgame capability per robot</li><li>Briefs team captains before alliance selection with data-backed recommendations</li></ul></div>
+</div>\`},
     ]
   },
   {
@@ -2953,10 +2949,10 @@ const GROUPS = [
       {id:'recruitment', title:'6.1 Recruitment &amp; Team Entry', body:\`
 <p>There is one funnel onto the team. Every incoming member &mdash; however they first come to our attention &mdash; completes the same interview stage before joining. That keeps the process fair and ensures every new member has been vetted for team compatibility, regardless of how they applied.</p>
 <h3>Two Ways Into the Funnel</h3>
-<ul>
-<li><strong>General Application (primary route)</strong> &mdash; during the annual recruitment window, any interested student applies through the public form.</li>
-<li><strong>Direct Referral (alternate entry point)</strong> &mdash; a student identified by a Team Mentor, an existing member (supported by two other full members), or a teacher. A referral skips nothing: the referred student still enters Stage 1 and must complete the Stage 2 interview like everyone else before being offered a spot.</li>
-</ul>
+<div class="role-grid">
+<div class="role-card"><h3>General Application <span style="color:#6e6e78;font-weight:600">&mdash; primary route</span></h3><p>During the annual recruitment window, any interested student applies through the public form.</p></div>
+<div class="role-card"><h3>Direct Referral <span style="color:#6e6e78;font-weight:600">&mdash; alternate entry point</span></h3><p>A student identified by a Team Mentor, an existing member (supported by two other full members), or a teacher. A referral skips nothing: the referred student still enters Stage 1 and must complete the Stage 2 interview like everyone else before being offered a spot.</p></div>
+</div>
 <div class="callout"><p><strong>Why interviews are never skipped:</strong> a referral means someone believes the student would be a good fit &mdash; it is not itself an offer of membership. The interview is what confirms team compatibility and sets expectations, for referred and general applicants alike.</p></div>
 <h3>Application Stages</h3>
 <ol>
@@ -3024,14 +3020,14 @@ const GROUPS = [
 </ul>
 <div class="callout blue"><p><strong>Customize:</strong> add facility-specific rules &mdash; building access hours, adult supervision requirements, etc.</p></div>\`},
       {id:'safety-captain', title:'7.5 Safety Captain', body:\`
-<h3 style="margin-top:0">Safety Captain &mdash; Team-Wide</h3>
-<p>A student role focused on keeping the team accountable to safe practices in the build space and at competitions.</p>
-<ul>
+<div class="role-grid">
+<div class="role-card"><h3>Safety Captain &mdash; Team-Wide</h3><p>A student role focused on keeping the team accountable to safe practices in the build space and at competitions.</p><ul>
 <li>Leads a brief safety review at the start of build season and before each competition</li>
 <li>Maintains the tool-training log and PPE supply</li>
 <li>First point of contact for injuries or near-misses; ensures they're logged and reported to a mentor</li>
 <li>Flags unsafe conditions or behavior to mentors without hesitation</li>
-</ul>\`},
+</ul></div>
+</div>\`},
     ]
   },
   {
@@ -3161,11 +3157,11 @@ const GROUPS = [
 </ul>\`},
       {id:'the-robot', title:'The Robot', body:\`
 <p>You know some of what the robot needs to do &mdash; here's where to start scoping it:</p>
-<ul>
-<li><strong>Chassis/Drivetrain</strong> &mdash; the robot's "body," including the wheels. What makes the most sense for your team?</li>
-<li><strong>Intake</strong> &mdash; the part responsible for collecting game pieces. What kind fits your strategy?</li>
-<li><strong>Delivery System/Arm</strong> &mdash; gets a collected game piece from Point A to Point B so it can be placed.</li>
-</ul>
+<div class="role-grid">
+<div class="role-card"><h3>Chassis/Drivetrain</h3><p>The robot's "body," including the wheels. What makes the most sense for your team?</p></div>
+<div class="role-card"><h3>Intake</h3><p>The part responsible for collecting game pieces. What kind fits your strategy?</p></div>
+<div class="role-card"><h3>Delivery System/Arm</h3><p>Gets a collected game piece from Point A to Point B so it can be placed.</p></div>
+</div>
 <div class="callout blue"><p><strong>Sketches and designs:</strong> whether it's a CAD render or a physical drawing, attach or link any designs that help visualize the plan above &mdash; and keep them in the Engineering Notebook.</p></div>\`},
     ]
   },
