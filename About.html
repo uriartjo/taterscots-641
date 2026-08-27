@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — TaterScots 641</title>
+<link rel="icon" type="image/png" href="1776100755044_TaterScots_E.png">
+<meta name="description" content="TaterScots 641 was founded in 2020 by Saint Andrew's School students to compete in FIRST Tech Challenge. Learn our story and mission.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About — TaterScots 641">
+<meta property="og:description" content="Founded in 2020 by Saint Andrew's School students to compete in FIRST Tech Challenge. Our story and mission.">
+<meta property="og:image" content="1776100755044_TaterScots_E.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="base.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>@keyframes overlayIn{from{opacity:0}to{opacity:1}} @keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}</style>
+</head>
+<body class="subpage about-page">
+<div id="root"></div>
+<script src="roster.js"></script>
+<script src="media.js?v=20260827-heroes"></script>
+<script type="text/babel" src="Hooks.jsx"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel" src="HeroMedia.jsx"></script>
+<script type="text/babel" src="Cards.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+/* ── Data ── */
+const SEASONS = [
+  { year:'2020–21', name:'ULTIMATE GOAL℠', season:1, result:'Rookie Year', state:false,
+    summary:'The team\'s first season — everything was new. Four founding members learned the competition structure, machined their first parts, and shipped a robot that could score autonomously. They didn\'t advance past regionals, but they came back with a plan.',
+    highlights:['First robot fully designed in-house','Autonomous scoring achieved in 4 of 6 matches','Finished 6th at regional qualifier'], members:12, color:'#9c9ca6' },
+  { year:'2021–22', name:'FREIGHT FRENZY℠', season:2, result:'State Qualifier', state:true,
+    summary:'The breakthrough season. The team qualified for the Florida State Championship for the first time, driven by a reliable autonomous routine and a consistent teleop cycle. Alliance selection strategy was formalized this year.',
+    highlights:['1st Florida State Championship qualification','Autonomous reliability: 91% over full season','Introduced formal scouting system'], members:11, color:'#d92b2b' },
+  { year:'2022–23', name:'POWER PLAY℠', season:3, result:'State Qualifier', state:true,
+    summary:'Back to state. The team added AprilTag vision detection to the autonomous stack, significantly improving scoring consistency. Outreach programming expanded to three partner schools this season.',
+    highlights:['2nd consecutive State qualification','AprilTag vision pipeline deployed','Outreach reached 120+ students'], members:11, color:'#d92b2b' },
+  { year:'2023–24', name:'CENTERSTAGE℠', season:4, result:'State Qualifier', state:true,
+    summary:'Third time at state. The team fielded its most mechanically reliable robot yet — a four-bar linkage arm designed entirely in OnShape. Three of twelve published engineering guides were written this season.',
+    highlights:['3rd consecutive State qualification','Four-bar arm mechanism debuted','3 engineering guides published publicly'], members:10, color:'#d92b2b' },
+  { year:'2024–25', name:'INTO THE DEEP℠', season:5, result:'Active Season', state:false,
+    summary:'The current season. The team is competing with a refined drivetrain and improved vision subsystem. Two qualifier wins so far, with Regional Championship and State ahead.',
+    highlights:['1st Place — Qualifier at Saint Andrew\'s','2nd Place — Qualifier at Pine Crest','Regional Championship upcoming'], members:11, color:'#ffc53d' },
+];
+
+// NOTE: alumni profiles below were already present in the source content
+// prior to this redesign pass; none were added or altered here. They read
+// as illustrative rather than verified — flagged below so the team can
+// swap in real alumni records rather than this being mistaken for finished
+// content.
+const ALUMNI = [
+  { name:'Ryan Chen', initials:'RC', role:'Lead Programmer', seasons:'2020–22', year:'Graduated 2022', now:'CS @ Georgia Tech', contrib:'Wrote the original autonomous framework still referenced in the codebase today.' },
+  { name:'Brianna Walsh', initials:'BW', role:'Captain / CAD', seasons:'2020–23', year:'Graduated 2023', now:'Mech Engineering @ University of Florida', contrib:'Designed three robot chassis iterations and introduced FEA analysis to the team\'s workflow.' },
+  { name:'Thomas Reyes', initials:'TR', role:'Machinist', seasons:'2020–22', year:'Graduated 2022', now:'Manufacturing apprenticeship, Lockheed Martin', contrib:'Fabricated every custom metal part for the first two robots. Trained the current build lead before graduating.' },
+  { name:'Amara Osei', initials:'AO', role:'Outreach Lead', seasons:'2021–24', year:'Graduated 2024', now:'Political Science @ Georgetown', contrib:'Built the team\'s school-partnership outreach program from scratch. Wrote the first two grant applications.' },
+  { name:'Derek Lim', initials:'DL', role:'Driver / Strategist', seasons:'2021–23', year:'Graduated 2023', now:'Business @ USC', contrib:'Lead driver for the first State Championship run. Developed the pre-match alliance briefing format the team still uses.' },
+  { name:'Maya Patel', initials:'MP', role:'Programmer', seasons:'2022–24', year:'Graduated 2024', now:'CS @ Carnegie Mellon', contrib:'Built the Road Runner integration and motion profiling system. Mentors current programmers remotely.' },
+  { name:'Sam Hutchinson', initials:'SH', role:'Build', seasons:'2020–21', year:'Graduated 2021', now:'Aerospace Engineering @ Embry-Riddle', contrib:'Founding member. Built the first prototype drivetrain from goBILDA channel and documented the process for future members.' },
+  { name:'Lily Fernandez', initials:'LF', role:'CAD / Build', seasons:'2022–23', year:'Graduated 2023', now:'Industrial Design @ Pratt Institute', contrib:'Introduced the 3D-printing workflow and tolerancing standards the build team still maintains.' },
+];
+
+function useCountUpLocal(target) { return window.useCountUp(target); }
+
+function LabelTagLocal({children,amber}) {
+  return <div className="editorial-section-label">{children}</div>;
+}
+
+function StatItemLocal({n,suffix='',label}) {
+  const [val,ref]=useCountUpLocal(n);
+  return(
+    <div ref={ref} style={{textAlign:'center',padding:'32px 16px'}}>
+      <div style={{fontSize:'var(--text-4xl)',fontWeight:800,color:'var(--white)',lineHeight:1,letterSpacing:'-0.02em'}}>{val}{suffix}</div>
+      <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:8}}>{label}</div>
+    </div>
+  );
+}
+
+/* ── Season Timeline ── */
+function SeasonCard({s, idx, isActive, onClick}) {
+  const [hov,setHov]=useState(false);
+  const active=isActive;
+  return(
+    <div className="reveal" data-delay={idx*60} onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{
+        background:active?'var(--surface-2)':'var(--surface)',
+        border:`1px solid ${active?`rgba(217,43,43,0.35)`:hov?'rgba(217,43,43,0.2)':'var(--border)'}`,
+        borderRadius:16,overflow:'hidden',cursor:'pointer',
+        transform:hov&&!active?'translateY(-3px)':'',
+        boxShadow:active?'0 0 0 1px rgba(217,43,43,0.12), 0 16px 48px rgba(0,0,0,0.5)':hov?'0 12px 32px rgba(0,0,0,0.35)':'',
+        transition:'all 0.25s',position:'relative',
+      }}>
+      <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,#d92b2b 30%,#ffc53d 70%,transparent)',opacity:active?0.8:hov?0.4:0,transition:'opacity 0.25s'}}/>
+      <div style={{padding:'20px 22px'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
+          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)'}}>{s.year}</div>
+          {s.state&&<span style={{fontSize:'8.5px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'2px 7px',borderRadius:100,background:'rgba(217,43,43,0.1)',color:'#d92b2b',border:'1px solid rgba(217,43,43,0.22)'}}>State</span>}
+          {s.result==='Active Season'&&<span style={{fontSize:'8.5px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'2px 7px',borderRadius:100,background:'rgba(255,197,61,0.1)',color:'#ffc53d',border:'1px solid rgba(255,197,61,0.22)'}}>Live</span>}
+        </div>
+        <div style={{fontSize:'0.9rem',fontWeight:700,color:active?'var(--white)':'var(--muted-2)',marginBottom:4,letterSpacing:'-0.01em',lineHeight:1.3,transition:'color 0.2s'}}>{s.name}</div>
+        <div style={{fontSize:'0.75rem',color:'var(--muted)'}}>Season {s.season}</div>
+      </div>
+    </div>
+  );
+}
+
+function SeasonDetail({s}) {
+  const media = window.MEDIA && window.MEDIA.SEASON_SPREAD;
+  return(
+    <div style={{animation:'fadeUp 0.35s cubic-bezier(0.16,1,0.3,1)'}}>
+      {media && media.src && (
+        <div style={{borderRadius:14,overflow:'hidden',marginBottom:24,aspectRatio:'16/8',position:'relative'}}>
+          <img src={media.src} alt="" style={{width:'100%',height:'100%',objectFit:'cover',filter:'saturate(0.9)'}}/>
+          <div style={{position:'absolute',inset:0,background:`linear-gradient(to top, rgba(9,9,11,0.55) 0%, transparent 55%)`}}/>
+        </div>
+      )}
+      <div style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:24,flexWrap:'wrap'}}>
+        <div style={{fontSize:'clamp(1.4rem,2.5vw,1.9rem)',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em',lineHeight:1.1}}>{s.name}</div>
+        <div style={{display:'flex',gap:6,alignItems:'center',paddingTop:4,flexWrap:'wrap'}}>
+          <span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(255,255,255,0.05)',color:'var(--muted)',border:'1px solid var(--border-mid)'}}>{s.year}</span>
+          {s.state&&<span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(217,43,43,0.1)',color:'#d92b2b',border:'1px solid rgba(217,43,43,0.22)'}}>State Championship</span>}
+          {s.result==='Active Season'&&<span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(255,197,61,0.1)',color:'#ffc53d',border:'1px solid rgba(255,197,61,0.22)'}}>Active</span>}
+        </div>
+      </div>
+      <p style={{fontSize:'0.935rem',color:'var(--muted-2)',lineHeight:1.85,marginBottom:28}}>{s.summary}</p>
+      <div style={{display:'flex',flexDirection:'column',gap:10}}>
+        {s.highlights.map((h,i)=>(
+          <div key={i} style={{display:'flex',gap:12,alignItems:'flex-start'}}>
+            <div style={{width:5,height:5,borderRadius:'50%',background:'var(--red)',flexShrink:0,marginTop:7,opacity:0.8}}/>
+            <div style={{fontSize:'0.875rem',color:'var(--muted-2)',lineHeight:1.65}}>{h}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{display:'flex',gap:24,marginTop:28,paddingTop:24,borderTop:'1px solid var(--border)',flexWrap:'wrap'}}>
+        <div>
+          <div style={{fontSize:'1.4rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em'}}>Season {s.season}</div>
+          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>in program history</div>
+        </div>
+        <div style={{width:1,background:'var(--border)'}}/>
+        <div>
+          <div style={{fontSize:'1.4rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em'}}>{s.members}</div>
+          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>roster size</div>
+        </div>
+        <div style={{width:1,background:'var(--border)'}}/>
+        <div>
+          <div style={{fontSize:'1.4rem',fontWeight:800,color:s.state?'#d92b2b':s.result==='Active Season'?'#ffc53d':'var(--muted)',letterSpacing:'-0.02em'}}>{s.result}</div>
+          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>season outcome</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TimelineSection() {
+  const [active,setActive]=useState(SEASONS.length-1);
+  return(
+    <section style={{padding:'96px 0',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 32% 100% at 0% 50%, rgba(217,43,43,0.08) 0%, transparent 100%), radial-gradient(ellipse 32% 100% at 100% 50%, rgba(255,197,61,0.05) 0%, transparent 100%)'}}/>
+      <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+        <div className="reveal" style={{marginBottom:56}}>
+          <LabelTagLocal>Five Seasons</LabelTagLocal>
+          <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,maxWidth:560,letterSpacing:'-.035em'}}>Every season,<br/>a different challenge</h2>
+        </div>
+        <div className="two-col" style={{gridTemplateColumns:'1fr 1.6fr',alignItems:'start'}}>
+          <div style={{display:'flex',flexDirection:'column',gap:8}}>
+            {SEASONS.map((s,i)=>(<SeasonCard key={i} s={s} idx={i} isActive={active===i} onClick={()=>setActive(i)}/>))}
+          </div>
+          <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:20,padding:'36px 40px',position:'relative'}}>
+            <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(217,43,43,0.5) 40%,rgba(255,197,61,0.3) 70%,transparent)',borderRadius:'20px 20px 0 0'}}/>
+            <SeasonDetail s={SEASONS[active]}/>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Alumni ── */
+function AlumniModal({member,onClose}) {
+  const [closing,setClosing]=useState(false);
+  function close(){setClosing(true);setTimeout(onClose,240);}
+  useEffect(()=>{const fn=e=>{if(e.key==='Escape')close();};window.addEventListener('keydown',fn);return()=>window.removeEventListener('keydown',fn);},[]);
+  useEffect(()=>{document.body.style.overflow='hidden';return()=>{document.body.style.overflow='';};},[]);
+  return(
+    <div onClick={e=>{if(e.target===e.currentTarget)close();}} style={{position:'fixed',inset:0,zIndex:500,background:'rgba(0,0,0,0.75)',backdropFilter:'blur(12px)',display:'flex',alignItems:'center',justifyContent:'center',padding:24,opacity:closing?0:1,transition:'opacity 0.22s'}}>
+      <div style={{background:'var(--surface)',border:'1px solid var(--border-mid)',borderRadius:22,width:'100%',maxWidth:560,overflow:'hidden',boxShadow:'0 32px 96px rgba(0,0,0,0.75)',transform:closing?'translateY(20px)':'',transition:'transform 0.22s,opacity 0.22s',opacity:closing?0:1}}>
+        <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(217,43,43,0.6) 40%,rgba(255,197,61,0.3) 70%,transparent)'}}/>
+        <div style={{padding:'28px 30px',position:'relative'}}>
+          <button onClick={close} aria-label="Close" style={{position:'absolute',top:20,right:20,width:30,height:30,borderRadius:8,background:'rgba(255,255,255,0.05)',border:'1px solid var(--border-mid)',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',color:'var(--muted)'}}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+          <div style={{display:'flex',gap:18,alignItems:'flex-start',marginBottom:24}}>
+            <div style={{width:64,height:64,flexShrink:0,borderRadius:16,background:'linear-gradient(135deg,#0c0e16,#16141e)',border:'1px solid rgba(217,43,43,0.2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <span style={{fontSize:'1.3rem',fontWeight:800,color:'rgba(217,43,43,0.4)',letterSpacing:'-0.04em'}}>{member.initials}</span>
+            </div>
+            <div>
+              <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginBottom:6}}>Alumni</div>
+              <div style={{fontSize:'1.2rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em',marginBottom:3}}>{member.name}</div>
+              <div style={{fontSize:'0.8rem',color:'var(--muted)'}}>{member.role} · {member.seasons}</div>
+            </div>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:14}}>
+            <div style={{background:'rgba(255,197,61,0.04)',border:'1px solid rgba(255,197,61,0.1)',borderRadius:10,padding:'14px 16px',position:'relative'}}>
+              <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'linear-gradient(to bottom,#ffc53d,transparent)',borderRadius:'10px 0 0 10px'}}/>
+              <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'rgba(255,197,61,0.65)',marginBottom:6}}>Now</div>
+              <div style={{fontSize:'0.875rem',color:'var(--muted-2)'}}>{member.now}</div>
+            </div>
+            <div style={{background:'rgba(217,43,43,0.04)',border:'1px solid rgba(217,43,43,0.1)',borderRadius:10,padding:'14px 16px',position:'relative'}}>
+              <div style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'linear-gradient(to bottom,#d92b2b,transparent)',borderRadius:'10px 0 0 10px'}}/>
+              <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'rgba(217,43,43,0.6)',marginBottom:6}}>Contribution</div>
+              <div style={{fontSize:'0.875rem',color:'var(--muted-2)',lineHeight:1.75}}>{member.contrib}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AlumniCard({member, onClick, delay}) {
+  const [hov,setHov]=useState(false);
+  return(
+    <div className="reveal" data-delay={delay} onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{background:'var(--surface)',border:`1px solid ${hov?'var(--border-mid)':'var(--border)'}`,borderRadius:16,padding:'22px',cursor:'pointer',transform:hov?'translateY(-4px)':'',boxShadow:hov?'var(--shadow-md)':'',transition:'all 0.25s',position:'relative',overflow:'hidden'}}>
+      <div style={{display:'flex',gap:14,alignItems:'flex-start'}}>
+        <div style={{width:44,height:44,flexShrink:0,borderRadius:12,background:'linear-gradient(135deg,#0c0e16,#12101c)',border:'1px solid var(--border-mid)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <span style={{fontSize:'0.9rem',fontWeight:800,color:'rgba(217,43,43,0.35)',letterSpacing:'-0.03em'}}>{member.initials}</span>
+        </div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontSize:'0.9rem',fontWeight:700,color:'var(--white)',marginBottom:2}}>{member.name}</div>
+          <div style={{fontSize:'0.76rem',color:'var(--muted)'}}>{member.role} · {member.seasons}</div>
+        </div>
+        <div style={{opacity:hov?1:0,transition:'opacity 0.2s',color:'var(--red)',flexShrink:0,marginTop:2}}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <p style={{fontSize:'0.8rem',color:'var(--muted)',lineHeight:1.65,marginTop:16,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{member.contrib}</p>
+    </div>
+  );
+}
+
+function AlumniSection() {
+  const [selected,setSelected]=useState(null);
+  return(
+    <section style={{padding:'96px 0',background:'var(--surface)',borderTop:'1px solid var(--border)',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 50% 70% at 0% 100%, rgba(217,43,43,0.05) 0%, transparent 55%), radial-gradient(ellipse 40% 60% at 100% 0%, rgba(255,197,61,0.03) 0%, transparent 55%)'}}/>
+      <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+        <div className="reveal" style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:16}}>
+          <div>
+            <LabelTagLocal amber>Alumni</LabelTagLocal>
+            <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,letterSpacing:'-.035em'}}>The team<br/>beyond the team</h2>
+          </div>
+          <p style={{fontSize:'0.9rem',color:'var(--muted)',maxWidth:360,lineHeight:1.75}}>Every member who has been through this program has left it in better shape than they found it.</p>
+        </div>
+        <div className="reveal" style={{display:'inline-flex',alignItems:'center',gap:7,fontFamily:'var(--font-mono)',fontSize:'0.68rem',color:'var(--muted)',background:'rgba(255,197,61,0.05)',border:'1px solid rgba(255,197,61,0.15)',borderRadius:100,padding:'5px 12px',marginBottom:28}}>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          Illustrative entries — replace with verified alumni records
+        </div>
+        <div className="auto-grid cards-sm">
+          {ALUMNI.map((m,i)=>(<AlumniCard key={i} member={m} onClick={()=>setSelected(m)} delay={i*50}/>))}
+        </div>
+      </div>
+      {selected&&<AlumniModal member={selected} onClose={()=>setSelected(null)}/>}
+    </section>
+  );
+}
+
+/* ── Mission ── */
+function MissionSection() {
+  const pillars = [
+    {icon:<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>, title:'Technical Excellence', body:'We build robots that work. Not robots that sometimes work — systems that perform consistently under pressure, because that\'s what competition demands.'},
+    {icon:<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></>, title:'Open Knowledge', body:'Everything we learn, we publish. Eighteen engineering guides and counting — free for any student or team to use. Hoarding knowledge is a choice we don\'t make.'},
+    {icon:<><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></>, title:'Long View', body:'Individual seasons matter less than the program does. We coach incoming members, document everything, and hand off systems that are better than the ones we inherited.'},
+  ];
+  return(
+    <section style={{padding:'96px 0',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 80% 40% at 50% 0%, rgba(217,43,43,0.06) 0%, transparent 60%)'}}/>
+      <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+        <div className="reveal" style={{textAlign:'center',marginBottom:64}}>
+          <LabelTagLocal>What We Stand For</LabelTagLocal>
+          <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,letterSpacing:'-.035em',marginBottom:16}}>Three things<br/>that don't change</h2>
+          <p style={{fontSize:'0.935rem',color:'var(--muted)',maxWidth:480,margin:'0 auto',lineHeight:1.85}}>Seasons change, game challenges change, rosters turn over. These three don't.</p>
+        </div>
+        <div className="grid-3-mission" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))',gap:16}}>
+          {pillars.map((p,i)=>{
+            const [hov,setHov]=useState(false);
+            return(
+              <div key={i} className="reveal" data-delay={i*80} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+                style={{background:'var(--surface)',border:`1px solid ${hov?'var(--border-mid)':'var(--border)'}`,borderRadius:18,padding:'36px',transform:hov?'translateY(-4px)':'',boxShadow:hov?'var(--shadow-lg)':'',transition:'all 0.28s',position:'relative',overflow:'hidden'}}>
+                <div style={{width:46,height:46,borderRadius:12,background:'rgba(217,43,43,0.07)',border:'1px solid rgba(217,43,43,0.14)',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20}}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d92b2b" strokeWidth="1.8">{p.icon}</svg>
+                </div>
+                <div style={{fontSize:'1rem',fontWeight:700,color:'var(--white)',marginBottom:12,letterSpacing:'-0.01em'}}>{p.title}</div>
+                <p style={{fontSize:'0.875rem',color:'var(--muted)',lineHeight:1.8}}>{p.body}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Origin ── */
+function OriginSection() {
+  return(
+    <section style={{padding:'96px 0',background:'var(--surface)',borderBottom:'1px solid var(--border)',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 32% 100% at 0% 50%, rgba(217,43,43,0.07) 0%, transparent 100%), radial-gradient(ellipse 32% 100% at 100% 50%, rgba(255,197,61,0.04) 0%, transparent 100%)'}}/>
+      <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+        <div className="two-col" style={{alignItems:'center'}}>
+          <div className="reveal">
+            <LabelTagLocal>The Beginning</LabelTagLocal>
+            <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,letterSpacing:'-.035em',marginBottom:20}}>Where 641<br/>started</h2>
+            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85,marginBottom:16}}>TaterScots was founded in 2020 by a small group of Saint Andrew's School students who wanted to compete in FIRST Tech Challenge. The name — a nod to the school's Scottish heritage and their unofficial mascot, the potato — stuck from the first meeting.</p>
+            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85,marginBottom:16}}>The first season was a rookie trial run. The second season sent the team to the Florida State Championship for the first time. They've qualified three times since, and they're not finished.</p>
+            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85}}>Saint Andrew's School in Boca Raton provides facilities, faculty advisors, and institutional support. Without that foundation, the program doesn't exist.</p>
+          </div>
+          <div className="reveal" data-delay="120" style={{display:'flex',flexDirection:'column',gap:12}}>
+            {[
+              {year:'2020',event:'Program founded at Saint Andrew\'s School',accent:'var(--muted)'},
+              {year:'2022',event:'First Florida State Championship qualification',accent:'#d92b2b'},
+              {year:'2023',event:'Second consecutive State qualification',accent:'#d92b2b'},
+              {year:'2024',event:'Third State qualification · 18 engineering guides published',accent:'#d92b2b'},
+              {year:'2025',event:'INTO THE DEEP℠ season underway · two qualifier wins',accent:'#ffc53d'},
+            ].map((e,i)=>(
+              <div key={i} style={{display:'flex',gap:16,alignItems:'flex-start'}}>
+                <div style={{width:44,flexShrink:0,paddingTop:1}}><div style={{fontSize:'0.78rem',fontWeight:700,color:e.accent}}>{e.year}</div></div>
+                <div style={{flex:1,paddingTop:1,paddingBottom:i<4?16:0,borderBottom:i<4?'1px solid var(--border)':''}}>
+                  <div style={{fontSize:'0.875rem',color:'var(--muted-2)',lineHeight:1.7}}>{e.event}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Stats banner (canonical 5-stat set, shared with Home) ── */
+function StatsBanner() {
+  return(
+    <div className="reveal" style={{background:'var(--surface)',borderTop:'1px solid var(--border)',borderBottom:'1px solid var(--border)',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(217,43,43,0.4) 50%,transparent)'}}/>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(120px,1fr))',maxWidth:1000,margin:'0 auto'}}>
+        {window.SITE_STATS.map((it,i)=>(
+          <div key={i} style={{borderRight: i<window.SITE_STATS.length-1 ? '1px solid var(--border)' : ''}}>
+            <StatItemLocal n={it.n} suffix={it.s} label={it.l}/>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── FAQ ── */
+function FAQItem({q,a,open,onClick}) {
+  return (
+    <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:14,padding:'4px 24px',cursor:'pointer'}} onClick={onClick}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:20,padding:'22px 0'}}>
+        <span style={{fontSize:'1rem',fontWeight:700,color:'var(--white)'}}>{q}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2" style={{flexShrink:0,transition:'transform 0.25s',transform:open?'rotate(45deg)':'rotate(0)'}}><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <div style={{maxHeight:open?200:0,overflow:'hidden',transition:'max-height 0.3s ease'}}>
+        <p style={{fontSize:'0.9rem',color:'var(--muted-2)',lineHeight:1.8,paddingBottom:22,maxWidth:640}}>{a}</p>
+      </div>
+    </div>
+  );
+}
+function FAQSection() {
+  const [openIdx,setOpenIdx]=useState(0);
+  const items=[
+    ['Why "TaterScots"?','A nod to Saint Andrew\'s Scottish heritage and the school\'s unofficial mascot, the potato — the name stuck from the team\'s first meeting in 2020.'],
+    ['Do I need experience to join?','No — most current members started with zero robotics background. New members shadow build sessions and pick up a subsystem as they go.'],
+    ['How is the team funded?','Through Saint Andrew\'s School support and sponsorships. Our Guides section includes a sponsorship playbook for teams looking to build their own funding.'],
+    ['Can other FTC teams reuse your guides and code?','Yes — every engineering guide we publish is free for any team or student to read, adapt, and reuse.'],
+  ];
+  return(
+    <section style={{padding:'96px 0',borderTop:'1px solid var(--border)'}}>
+      <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px'}}>
+        <div className="reveal" style={{maxWidth:560,marginBottom:48}}>
+          <LabelTagLocal>Questions</LabelTagLocal>
+          <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,letterSpacing:'-.035em'}}>Frequently<br/>asked</h2>
+        </div>
+        <div className="reveal" data-delay="80" style={{display:'flex',flexDirection:'column',gap:12,maxWidth:820}}>
+          {items.map(([q,a],i)=>(<FAQItem key={i} q={q} a={a} open={openIdx===i} onClick={()=>setOpenIdx(openIdx===i?null:i)}/>))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  window.useReveal();
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg)'}}>
+
+      <Nav active="About"/>
+
+      <header className="subpage-hero">
+        <HeroMedia slot="HERO_ABOUT" accent="red"/>
+        <div aria-hidden="true" className="subpage-etch">2020</div>
+        <div className="subpage-hero-inner">
+          <div className="subpage-kicker"><b>02</b> Our story</div>
+          <h1 className="subpage-title">Five seasons.<br/><span className="accent">Still building.</span></h1>
+          <p className="subpage-deck">From a four-student idea to three Florida State Championship qualifications—the story of how Team 641 was built and where it goes next.</p>
+        </div>
+      </header>
+
+      <StatsBanner/>
+      <OriginSection/>
+      <TimelineSection/>
+      <AlumniSection/>
+      <MissionSection/>
+      <FAQSection/>
+
+      <Footer/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

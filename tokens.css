@@ -1,0 +1,92 @@
+/* ════════════════════════════════════════
+   TaterScots — Unified Design Tokens
+   Single source of truth for color + type across every page.
+   Replaces the two divergent systems documented in the redesign audit.
+   ════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Backgrounds */
+  --bg:            #09090b;
+  --surface:       #0f0f12;
+  --surface-2:     #15151a;
+  --surface-hover: #1c1c22;
+
+  /* Borders */
+  --border:        rgba(255,255,255,0.055);
+  --border-mid:    rgba(255,255,255,0.09);
+  --border-hover:  rgba(217,43,43,0.32);
+
+  /* Foreground — muted lightened from #6e6e78 to clear WCAG AA (4.5:1) on --bg/--surface */
+  --white:         #f2f0ec;
+  --muted:         #86868f;
+  --muted-2:       #9c9ca6;
+
+  /* Brand */
+  --red:           #d92b2b;
+  --red-bright:    #f03535;
+  --red-dim:       rgba(217,43,43,0.09);
+  --amber:         #ffc53d;
+  --amber-dim:     rgba(255,197,61,0.09);
+
+  /* Semantic (kept separate from the red/amber brand accent) */
+  --blue:          #4d9fff;
+  --blue-dim:      rgba(77,159,255,0.09);
+  --green:         #34a46c;
+  --green-dim:     rgba(52,164,108,0.09);
+
+  /* Type */
+  --font-body:     'Inter', system-ui, -apple-system, sans-serif;
+  --font-display:  'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', 'Courier New', monospace;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.8125rem;
+  --text-base: 0.875rem;
+  --text-md:   0.935rem;
+  --text-lg:   1rem;
+  --text-xl:   1.08rem;
+  --text-2xl:  1.25rem;
+  --text-3xl:  1.65rem;
+  --text-4xl:  clamp(2rem, 3.4vw, 2.6rem);
+  --text-5xl:  clamp(2.6rem, 6vw, 4.6rem);
+  --text-hero: clamp(3.4rem, 10vw, 8.5rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-normal: 1.65;
+  --leading-loose: 1.85;
+
+  --tracking-tight: -0.025em;
+  --tracking-snug: -0.015em;
+  --tracking-wide: 0.02em;
+  --tracking-widest: 0.14em;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-full: 100px;
+
+  --shadow-md: 0 8px 28px rgba(0,0,0,0.45);
+  --shadow-lg: 0 20px 56px rgba(0,0,0,0.5);
+  --shadow-card-hover: 0 20px 56px rgba(0,0,0,0.45), 0 0 0 1px rgba(217,43,43,0.07), 0 0 32px rgba(217,43,43,0.05);
+
+  --max-width: 1200px;
+  --nav-height: 64px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--white);
+  background: var(--bg);
+  line-height: var(--leading-normal);
+}
+h1,h2,h3,h4 { font-family: var(--font-display); color: var(--white); }
+h1 { font-size: var(--text-hero); font-weight: 900; letter-spacing: -0.04em; line-height: 0.92; }
+h2 { font-size: var(--text-5xl); font-weight: 800; letter-spacing: var(--tracking-snug); line-height: 1.05; }
+h3 { font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.01em; }
+p { font-size: var(--text-md); color: var(--muted-2); line-height: var(--leading-loose); }
+code, pre { font-family: var(--font-mono); }

@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Handbook — TaterScots 641</title>
+<link rel="icon" type="image/png" href="1776100755044_TaterScots_E.png">
+<meta name="description" content="The TaterScots 641 team handbook — standards, workflows, and procedures for FIRST Tech Challenge Team 641.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Team Handbook — TaterScots 641">
+<meta property="og:description" content="Standards, workflows, and procedures for FIRST Tech Challenge Team 641.">
+<meta property="og:image" content="1776100755044_TaterScots_E.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="base.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+.guide-layout{display:grid;grid-template-columns:230px 1fr;gap:48px;align-items:start}
+.guide-sidebar{position:sticky;top:84px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-height:calc(100vh - 104px);overflow-y:auto;align-self:start}
+.guide-sidebar-head{padding:13px 18px;background:rgba(217,43,43,0.09);border-bottom:1px solid rgba(217,43,43,0.18)}
+.guide-sidebar-label{display:block;font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#ff7070}
+.guide-sidebar-readout{display:block;margin-top:5px;color:var(--muted-2);font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.guide-sidebar-sections{position:relative;padding-bottom:8px}
+.guide-sidebar-marker{position:absolute;left:0;top:0;width:2px;height:40px;background:var(--red);box-shadow:0 0 18px rgba(217,43,43,.42);transition:transform .42s cubic-bezier(.16,1,.3,1),height .32s cubic-bezier(.16,1,.3,1);pointer-events:none;z-index:2}
+.guide-sidebar-group{border-bottom:1px solid rgba(255,255,255,0.045)}
+.guide-sidebar-group:last-child{border-bottom:none}
+.guide-sidebar a.group-link{display:flex;align-items:center;gap:9px;padding:9px 18px;color:var(--muted-2);font-size:0.84rem;font-weight:700;text-decoration:none;transition:color .2s,background .2s,padding .32s cubic-bezier(.16,1,.3,1);cursor:pointer}
+.guide-sidebar a.group-link:hover{color:var(--white);background:rgba(255,255,255,0.025)}
+.guide-sidebar a.group-link.active{color:var(--white);background:rgba(255,255,255,0.035);padding-left:21px}
+.guide-sidebar a.group-link .num{color:var(--muted);font-weight:700;flex-shrink:0}
+.sidebar-icon{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .25s,transform .25s cubic-bezier(.16,1,.3,1)}
+.group-link.active .sidebar-icon{transform:rotate(-4deg) scale(1.08)}
+.guide-sidebar a.sub-link{display:block;padding:6px 18px 6px 34px;color:var(--muted);font-size:0.775rem;text-decoration:none;border-left:2px solid transparent;transition:all 0.2s}
+.guide-sidebar a.sub-link:hover{color:var(--white);border-left-color:rgba(217,43,43,0.4)}
+.guide-sidebar-subs{padding:0 0 9px;animation:subnavIn .32s cubic-bezier(.16,1,.3,1)}
+@keyframes subnavIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+@media (max-width:860px) and (min-width:681px){.guide-layout{grid-template-columns:184px 1fr;gap:26px}.guide-sidebar a.group-link{padding:8px 12px;font-size:0.78rem}.guide-sidebar a.group-link .num{display:none}}
+@media (max-width:680px){.guide-layout{grid-template-columns:1fr}.guide-sidebar{display:none}}
+
+.mobile-chapter-nav{display:none}
+@media (max-width:680px){
+  .mobile-chapter-nav{display:block;position:sticky;top:var(--nav-height);z-index:40;margin:0 -32px 26px;background:rgba(16,16,20,.94);backdrop-filter:blur(18px) saturate(1.4);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .mobile-chapter-trigger{width:100%;min-height:52px;padding:10px 20px;display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--white);text-align:left;cursor:pointer}
+  .mobile-chapter-trigger .chapter-index{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:var(--red)}
+  .mobile-chapter-trigger .chapter-current{font-size:.84rem;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mobile-chapter-trigger .chapter-toggle{margin-left:auto;color:var(--muted);transition:transform .25s}
+  .mobile-chapter-trigger[aria-expanded="true"] .chapter-toggle{transform:rotate(45deg)}
+  .mobile-chapter-menu{max-height:min(62vh,460px);overflow:auto;padding:7px 20px 14px;border-top:1px solid var(--border);animation:subnavIn .25s cubic-bezier(.16,1,.3,1)}
+  .mobile-chapter-menu a{display:flex;gap:12px;padding:10px 0;color:var(--muted-2);font-size:.82rem;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.045)}
+  .mobile-chapter-menu a:last-child{border-bottom:0}.mobile-chapter-menu a.active{color:var(--white)}
+  .mobile-chapter-menu .num{font-family:var(--font-mono);color:var(--red)}
+}
+
+.guide-content h2{font-size:1.5rem;font-weight:800;color:var(--white);margin:0 0 6px;padding-top:0;display:flex;align-items:center;gap:12px;letter-spacing:-0.01em;scroll-margin-top:88px}
+.group-icon-badge{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.guide-content .group-kicker{font-size:0.85rem;color:var(--muted);line-height:1.8;margin:12px 0 28px 50px;max-width:610px}
+.guide-content h3{font-size:1rem;font-weight:700;color:var(--white);margin:26px 0 8px;letter-spacing:-0.005em;scroll-margin-top:88px}
+.guide-content h3::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent,var(--muted));margin-right:9px;vertical-align:middle}
+.guide-content p{color:var(--muted-2);line-height:1.85;margin-bottom:14px;font-size:0.9rem}
+.guide-content ul,.guide-content ol{color:var(--muted-2);line-height:1.8;margin-bottom:14px;padding-left:20px;font-size:0.9rem}
+.guide-content li{margin-bottom:5px}
+.guide-content strong{color:var(--white);font-weight:600}
+.glossary-term{border-bottom:1px dashed rgba(255,197,61,0.45);cursor:help;transition:color 0.15s,border-color 0.15s}
+.glossary-term:hover,.glossary-term:focus{color:var(--amber);border-bottom-color:var(--amber);outline:none}
+.guide-content table{width:100%;border-collapse:collapse;margin:8px 0 22px;font-size:0.85rem}
+.guide-content th{text-align:left;padding:9px 14px;border-bottom:1px solid var(--border-mid);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);font-weight:700}
+.guide-content td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--muted-2)}
+.guide-content td:first-child{color:#c7c7cf}
+.guide-content .section-block{position:relative;isolation:isolate;margin-bottom:58px;padding:8px 0 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.guide-content [id]{scroll-margin-top:96px}
+.guide-content .section-block:last-child{border-bottom:none}
+.chapter-etch{position:absolute;right:-.02em;top:-.13em;z-index:-1;font-family:var(--font-display);font-size:clamp(8rem,17vw,13.5rem);font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(240,238,234,.055);letter-spacing:-.08em;transform:translate3d(0,var(--etch-y,0),0);pointer-events:none;user-select:none;transition:opacity .55s}
+.section-block.reveal{opacity:1;transform:none;transition:none}
+.section-block.reveal>h2,.section-block.reveal>.group-kicker{opacity:0;transform:translateY(18px)}
+.section-block.reveal>h2{transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.section-block.reveal>.group-kicker{transition:opacity .55s .08s cubic-bezier(.16,1,.3,1),transform .55s .08s cubic-bezier(.16,1,.3,1)}
+.section-block.reveal.visible>h2,.section-block.reveal.visible>.group-kicker{opacity:1;transform:none}
+.section-block.reveal .group-icon-badge{transform:rotate(-8deg) scale(.82);transition:transform .62s .04s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+.section-block.reveal.visible .group-icon-badge{transform:none;box-shadow:0 8px 30px color-mix(in srgb,var(--accent) 16%,transparent)}
+.section-block.reveal>h2::after{content:'';width:42px;height:1px;background:var(--accent);opacity:.56;transform:scaleX(0);transform-origin:left;transition:transform .7s .16s cubic-bezier(.16,1,.3,1)}
+.section-block.reveal.visible>h2::after{transform:scaleX(1)}
+.callout{background:rgba(255,197,61,0.05);border:1px solid rgba(255,197,61,0.15);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0}
+.callout.red{background:rgba(217,43,43,0.06);border-color:rgba(217,43,43,0.15);border-left-color:var(--red)}
+.callout.blue{background:rgba(77,159,255,0.06);border-color:rgba(77,159,255,0.15);border-left-color:var(--blue)}
+.callout.green{background:rgba(52,164,108,0.06);border-color:rgba(52,164,108,0.15);border-left-color:var(--green)}
+.callout p{margin:0;color:var(--muted-2);font-size:0.86rem}
+.callout strong{color:var(--amber)}
+.callout.red strong{color:#ff7070}
+.callout.blue strong{color:var(--blue)}
+.callout.green strong{color:#41c47e}
+.section-block .callout{position:relative;border-left-color:transparent;overflow:hidden}
+.section-block .callout::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);transform:scaleY(0);transform-origin:top;transition:transform .55s .15s cubic-bezier(.16,1,.3,1)}
+.section-block .callout.red::after{background:var(--red)}.section-block .callout.blue::after{background:var(--blue)}.section-block .callout.green::after{background:var(--green)}
+.section-block.visible .callout::after{transform:scaleY(1)}
+.link-card{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--surface);border:1px solid var(--border-mid);border-radius:12px;padding:16px 20px;margin:16px 0;text-decoration:none;transition:all 0.2s}
+.link-card:hover{border-color:rgba(217,43,43,0.3);transform:translateY(-2px)}
+.link-card .lc-title{color:var(--white);font-weight:700;font-size:0.92rem;margin-bottom:3px}
+.link-card .lc-sub{color:var(--muted);font-size:0.8rem}
+.link-card .lc-arrow{color:var(--red);font-size:1.1rem;flex-shrink:0;transition:transform .22s cubic-bezier(.16,1,.3,1)}
+.link-card:hover .lc-arrow{transform:translateX(5px)}
+.glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:8px 0 20px}
+.glossary-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px}
+.glossary-item dt{color:var(--white);font-weight:700;font-size:0.86rem;margin-bottom:3px}
+.glossary-item dd{color:var(--muted-2);font-size:0.82rem;line-height:1.6}
+@media (max-width:640px){.glossary-grid{grid-template-columns:1fr}}
+.role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:14px 0 24px}
+.role-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent,var(--muted));border-radius:0 12px 12px 0;padding:16px 20px;transition:border-color 0.2s,transform 0.2s}
+.role-card:hover{transform:translateY(-2px)}
+.role-card h3{margin:0 0 8px!important}
+.role-card p{font-size:0.85rem;margin-bottom:8px}
+.role-card ul{margin-bottom:0;font-size:0.82rem}
+@media (max-width:640px){.role-grid{grid-template-columns:1fr}}
+.glossary-popup{filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))}
+.guide-content tbody tr{transition:background .18s,color .18s}.guide-content tbody tr:hover{background:rgba(255,255,255,.025)}
+.handbook-search{position:relative;max-width:520px;margin:0 auto 8px;display:flex;align-items:center;gap:10px}
+.handbook-search-field{position:relative;flex:1}.search-result-count{min-width:76px;font-family:var(--font-mono);font-size:.63rem;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.search-result-count.is-active{color:var(--muted-2)}
+.handbook-page .subpage-hero-inner{animation:handbookHeroCopy .82s .08s both cubic-bezier(.16,1,.3,1)}
+.handbook-page .subpage-hero .hero-media-frame{will-change:transform;transform:translate3d(0,var(--hero-shift,0),0)}
+.handbook-page .subpage-hero .hero-media-frame img{animation:handbookHeroImage 1.25s both cubic-bezier(.16,1,.3,1);transform-origin:center 45%}
+.handbook-page .subpage-etch{animation:handbookHeroEtch 1.05s .12s both cubic-bezier(.16,1,.3,1)}
+@keyframes handbookHeroCopy{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes handbookHeroImage{from{opacity:.55;transform:scale(1.055)}to{opacity:1;transform:scale(1.025)}}
+@keyframes handbookHeroEtch{from{opacity:0;transform:translateX(34px) skewX(-5deg)}to{opacity:1;transform:translateX(0) skewX(-5deg)}}
+@media (max-width:700px){
+  .handbook-search{max-width:none}.search-result-count{min-width:64px;font-size:.58rem}
+  .chapter-etch{right:-.08em;font-size:9rem;opacity:.7}
+  .guide-content [id]{scroll-margin-top:132px}
+}
+@media (prefers-reduced-motion:reduce){
+  .guide-sidebar-marker,.sidebar-icon,.guide-sidebar-subs,.mobile-chapter-menu,.link-card .lc-arrow,.section-block .callout::after,.section-block.reveal>h2,.section-block.reveal>.group-kicker,.section-block.reveal .group-icon-badge,.section-block.reveal>h2::after,.handbook-page .subpage-hero-inner,.handbook-page .subpage-hero .hero-media-frame img,.handbook-page .subpage-etch{animation:none!important;transition:none!important;transform:none!important}
+  .section-block.reveal>h2,.section-block.reveal>.group-kicker{opacity:1!important}
+  .section-block .callout::after,.section-block.reveal>h2::after{transform:scale(1)!important}
+}
+</style>
+</head>
+<body class="subpage handbook-page">
+<div id="root"></div>
+<script src="roster.js"></script>
+<script src="media.js?v=20260827-heroes"></script>
+<script type="text/babel" src="Hooks.jsx"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel" src="HeroMedia.jsx"></script>
+<script type="text/babel" src="Cards.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+/* ──────────────────────────────────────────
+   SECTION ICONS
+────────────────────────────────────────── */
+const GROUP_META = {
+  'team-info':        { color:'#d92b2b', rgb:'217,43,43',   icon:<><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="4"/></> },
+  'quick-start':      { color:'#ffc53d', rgb:'255,197,61',  icon:<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/> },
+  'roster':           { color:'#b392f0', rgb:'179,146,240', icon:<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></> },
+  'structure':        { color:'#4d9fff', rgb:'77,159,255',  icon:<><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></> },
+  'leadership':       { color:'#34a46c', rgb:'52,164,108',  icon:<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/> },
+  'membership':       { color:'#f06292', rgb:'240,98,146',  icon:<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></> },
+  'safety':           { color:'#d92b2b', rgb:'217,43,43',   icon:<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></> },
+  'youth-protection': { color:'#4d9fff', rgb:'77,159,255',  icon:<><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></> },
+  'competition-day':  { color:'#ffc53d', rgb:'255,197,61',  icon:<><path d="M9 2h6a1 1 0 0 1 1 1v1H8V3a1 1 0 0 1 1-1z"/><path d="M4 6a2 2 0 0 1 2-2h1v2h10V4h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="13" y2="15"/></> },
+  'social-media':     { color:'#f06292', rgb:'240,98,146',  icon:<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/> },
+  'appendix-design':  { color:'#b392f0', rgb:'179,146,240', icon:<><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></> },
+  'appendix-glossary':{ color:'#34a46c', rgb:'52,164,108',  icon:<><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></> },
+};
+
+/* ──────────────────────────────────────────
+   HANDBOOK CONTENT
+────────────────────────────────────────── */
+const GROUPS = [
+  {
+    id:'team-info', num:'1', title:'Team Information', kicker:'Who we are, what we stand for, and the values judges look for at every event.',
+    sections:[
+      {id:'who-we-are', title:'1.1 Who We Are', body:`
+<p>TaterScots is FIRST Tech Challenge Team <strong>#641</strong>, based at Saint Andrew's School in Boca Raton, Florida. We design, build, and program a new competition robot from scratch every season, and we run STEM outreach that has reached 200+ students in our community.</p>
+<p>We've qualified for the Florida State Championship three times &mdash; 2022, 2023, and 2024. We're proud of that, but we don't lead with it. There's still a lot left to prove every season.</p>`},
+      {id:'motto', title:'1.2 Team Motto', body:`
+<div class="callout"><p><strong>Customize:</strong> add your team's motto or tagline here once it's decided. A good motto is short enough to fit on a pit banner and specific enough that it couldn't belong to any other team.</p></div>`},
+      {id:'goals', title:'1.3 Team Goals', body:`
+<p>Concrete goals for the season &mdash; replace with this year's real targets before kickoff:</p>
+<ul>
+<li>Qualify for and compete at the Florida State Championship</li>
+<li>Field an Inspire Award&ndash;eligible program: strong robot, strong notebook, strong outreach</li>
+<li>Reach a set number of students through outreach events (set a real number)</li>
+<li>Grow returning-member retention season over season</li>
+</ul>`},
+      {id:'core-values', title:'1.4 FIRST Core Values', body:`
+<p>Every member &mdash; student and adult &mdash; is expected to understand and live out FIRST's core values. Judges and volunteers watch for these in action, not just written on a poster.</p>
+<ul>
+<li><strong>Gracious Professionalism</strong> &mdash; doing high-quality work while respecting individuals and the community. Compete hard, treat other teams, judges, volunteers, and referees with respect and kindness &mdash; win or lose.</li>
+<li><strong>Coopertition</strong> &mdash; unqualified kindness and respect in the face of fierce competition. Lend tools or parts, share know-how, offer practice field time &mdash; even to teams you're competing against for the same awards.</li>
+<li><strong>Student-Led, Student-Built</strong> &mdash; FTC is a student-led program. Mentors guide, teach, ask questions, and keep the team safe &mdash; they do not design, build, or code the robot themselves. It should be obvious to any observer that students are doing the engineering.</li>
+</ul>
+<div class="callout"><p><strong>Why this matters at events:</strong> judges routinely ask, in front of the team, "who designed this?" and "who wrote this code?" &mdash; be ready to answer honestly and specifically. Mentors should default to guiding questions ("what happens if&hellip;?") instead of giving direct instructions or touching the robot/code themselves. A team perceived as adult-led &mdash; even unintentionally &mdash; can lose Inspire Award eligibility.</p></div>`},
+    ]
+  },
+  {
+    id:'quick-start', num:'2', title:'New Member Quick Start', kicker:'A fast-reference guide for anyone new to the team. Read this first, then use the rest of the handbook as a reference.',
+    sections:[
+      {id:'first-meeting', title:'2.1 Your First Meeting', body:`
+<p>What to expect and bring to your first few meetings:</p>
+<ul>
+<li>Closed-toe shoes &mdash; required in the build space, see <a href="#safety" style="color:#f0eeea">Section 7, Safety</a></li>
+<li>A notebook or laptop for taking notes</li>
+<li>Comfortable clothes you don't mind getting a little dusty or greasy in</li>
+<li>An open mind &mdash; prior robotics experience isn't required to contribute</li>
+</ul>
+<p>When you arrive, introduce yourself to a Team Captain or your assigned sub-team lead. They'll walk you through what the team is currently working on and where you can plug in.</p>`},
+      {id:'find-things', title:'2.2 Where to Find Things', body:`
+<div class="callout blue"><p><strong>Customize:</strong> drop in your team's real links below before sharing this page with new members.</p></div>
+<table>
+<tr><th>What you need</th><th>Where to find it</th></tr>
+<tr><td>Day-to-day chat / questions</td><td>Discord / Slack server &mdash; add invite link</td></tr>
+<tr><td>Official announcements, permission slips</td><td>Team email list</td></tr>
+<tr><td>CAD files, notebook, shared documents</td><td>Shared Drive folder</td></tr>
+<tr><td>Meeting &amp; competition dates</td><td>Team calendar</td></tr>
+<tr><td>Engineering Notebook</td><td>Notebook location / link</td></tr>
+</table>`},
+      {id:'key-contacts', title:'2.3 Key Contacts', body:`
+<p>Not sure who to ask? Start here.</p>
+<table>
+<tr><th>Role</th><th>Best way to reach them</th></tr>
+<tr><td>Head Coach / Mentor</td><td>email / Discord handle</td></tr>
+<tr><td>Team Captain</td><td>email / Discord handle</td></tr>
+<tr><td>Building &amp; Design Lead</td><td>email / Discord handle</td></tr>
+<tr><td>Programming Lead</td><td>email / Discord handle</td></tr>
+<tr><td>Communications &amp; Outreach Lead</td><td>email / Discord handle</td></tr>
+<tr><td>Safety Captain</td><td>email / Discord handle</td></tr>
+</table>`},
+    ]
+  },
+  {
+    id:'roster', num:'3', title:'Team Roster', kicker:'Every member of the team, kept current as people join or graduate.',
+    sections:[
+      {id:'roster-link', title:'Current Roster', body:`
+<p>The full, up-to-date roster &mdash; with photos and bios &mdash; lives on the Team page, not here, so it's only ever maintained in one place.</p>
+<a class="link-card" href="Team.html"><div><div class="lc-title">Meet the Team</div><div class="lc-sub">Full member profiles, roles, and years in FTC</div></div><div class="lc-arrow">&rarr;</div></a>`},
+    ]
+  },
+  {
+    id:'structure', num:'4', title:'Team Structure', kicker:'Departments, roles, and what each one owns.',
+    sections:[
+      {id:'program-wide', title:'4.1 Program-Wide Roles', body:`
+<p>Most roles operate within a single department. The role below spans the whole team.</p>
+<div class="role-grid">
+<div class="role-card"><h3>Schedule Coordinator &mdash; Team-Wide</h3><p>Quite possibly the unsung hero of the entire program &mdash; keeps everyone pointed at the next big thing coming up.</p><ul><li>Keeps the program calendar up to date</li><li>Tracks meets, events, and competitions</li></ul></div>
+</div>`},
+      {id:'building-design', title:'4.2 Building and Design Department', body:`
+<p>Responsible for designing, assembling, and repairing the robot during competition.</p>
+<div class="role-grid">
+<div class="role-card"><h3>Builder</h3><p>The core of the design team &mdash; for members who want to get as hands-on as possible.</p><ul>
+<li>Assist in designing and actively building the robot</li>
+<li>Be ready to assist with emergency repairs during competition</li>
+<li>Learn proper techniques on tool usage, and teach others with less experience</li>
+</ul></div>
+<div class="role-card"><h3>Engineering Notebook Author (Building &amp; Design)</h3><p>Keeps their department's notebook progressing. No single person writes all of it &mdash; this role makes sure progress keeps happening.</p><ul><li>Continuously maintains documentation during the design process</li><li>Compiles papers, documents, and discussions into an easy-to-digest format</li><li>Works with authors from other departments on the finalized notebook</li></ul></div>
+<div class="role-card"><h3>CAD Architect</h3><p>Helps members bring a design to life in CAD.</p><ul><li>Works with the design team to understand mechanics and structure</li><li>Uses CAD software to verify and visualize that the build is sound</li></ul></div>
+<div class="role-card"><h3>Compliance Officer</h3><p>Ensures the robot meets all requirements to be considered "legal," using the inspection checklist to guarantee a smooth competition registration.</p><ul><li>Stays familiar with the current season's robot inspection criteria</li><li>Keeps the design team informed of areas of concern</li><li>Confirms the robot is legal before competition</li></ul></div>
+</div>`},
+      {id:'programming', title:'4.3 Programming Department', body:`
+<p>Responsible for the brains of the robot &mdash; members typically focus on TeleOp or Autonomous.</p>
+<div class="role-grid">
+<div class="role-card"><h3>Programmer</h3><ul>
+<li>Writes code for TeleOp and/or Autonomous</li>
+<li>Provides input on design decisions that affect programming implementation</li>
+<li>Helps troubleshoot and debug other programmers' code</li>
+<li>Documents code clearly enough for other programmers to pick up</li>
+</ul></div>
+<div class="role-card"><h3>Engineering Notebook Author (Programming)</h3><ul><li>Continuously maintains documentation during the design process</li><li>Compiles papers, documents, and discussions into an easy-to-digest format</li><li>Works with authors from other departments on the finalized notebook</li></ul></div>
+</div>`},
+      {id:'comms-outreach', title:'4.4 Communications and Outreach Department', body:`
+<p>Holds the team microphone &mdash; internally and externally. Communications keeps members informed; outreach shows the community what the team is about.</p>
+<div class="role-grid">
+<div class="role-card"><h3>Community Manager</h3><ul>
+<li>Takes photo and video of events, meetings, and competitions</li>
+<li>Explains what FIRST is and how interested people can learn more</li>
+<li>Keeps the community informed on what the team is up to</li>
+<li>Helps coordinate community events</li>
+</ul></div>
+</div>`},
+      {id:'scouting-drive', title:'4.5 Scouting &amp; Drive Team', body:`
+<p>Represents the team on the field and informs match strategy. Drive Team seats should be earned through practice and demonstrated reliability, not seniority &mdash; run regular practice matches to decide who fills each one.</p>
+<div class="role-grid">
+<div class="role-card"><h3>Driver</h3><p>Controls the robot's movement during driver-controlled play. Must know the robot's mechanical limits cold.</p><ul><li>Attends all drive practice sessions</li><li>Communicates constantly with the Operator and Coach during a match</li><li>Stays calm and adapts when a mechanism fails mid-match</li><li>Knows Drive Team etiquette rules in the game manual</li></ul></div>
+<div class="role-card"><h3>Operator</h3><p>Controls the robot's secondary mechanisms (arm, intake, lift, etc.) in coordination with the Driver.</p><ul><li>Masters the control scheme for every mechanism</li><li>Calls out game-piece and field state information to the Driver</li><li>Practices failure scenarios &mdash; e.g. a jammed intake &mdash; with the Driver</li></ul></div>
+<div class="role-card"><h3>Drive Coach</h3><p>Per FTC rules, the only adult or student allowed to communicate with the Drive Team during a match. Sets match strategy pre-match and relays scouting information.</p><ul><li>Reviews the alliance's and opponents' scouting data before each match</li><li>Sets a clear match plan (autonomous focus, endgame priority, etc.) with the Drive Team beforehand</li><li>Stays within the designated Coach area and follows all field communication rules</li></ul></div>
+<div class="role-card"><h3>Scouting Lead</h3><p>Tracks other teams' robot capabilities and match performance throughout an event to inform alliance selection.</p><ul><li>Maintains scouting sheets or app for every team at the event</li><li>Records autonomous reliability, cycle times, and endgame capability per robot</li><li>Briefs team captains before alliance selection with data-backed recommendations</li></ul></div>
+</div>`},
+    ]
+  },
+  {
+    id:'leadership', num:'5', title:'Leadership Roles', kicker:'Division Leads and members are partners working toward a mutual goal &mdash; not a hierarchy for its own sake.',
+    sections:[
+      {id:'lead-responsibilities', title:'5.1 Responsibilities', body:`
+<p>Being a Division Lead is more than being an expert in a field. Leads should also build proficiency across the whole FTC process, so they can make better decisions for their division.</p>
+<ul>
+<li>Inspiring other members to put out their best work</li>
+<li>Keeping enthusiasm high through every part of the season</li>
+<li>Devising ways to train up the skill set of current and potential members</li>
+<li>Ensuring their division hits deliverables, deadlines, and targets</li>
+<li>Maintaining accountability for themselves and their division</li>
+<li>Fostering a safe space for sharing ideas and thoughts</li>
+<li>Being the first point of communication within their division when an issue arises</li>
+<li>Delegating and coordinating goals needed for the division to succeed</li>
+<li>Progressing forward while ensuring all members get ample opportunity to grow</li>
+</ul>`},
+      {id:'lead-selection', title:'5.2 Leadership Selection', body:`
+<p>Students are encouraged to self-nominate if they feel ready to step up. Nomination alone does not guarantee selection.</p>
+<ol>
+<li>Self-nominate using a Google Form &mdash; schedule availability, time commitment, etc.</li>
+<li>Interview with the Team Mentor, assessing both knowledge and soft skills (communication, personality, etc.)</li>
+<li>The Mentor makes the final decision</li>
+</ol>`},
+      {id:'lead-interview', title:'5.3 Leadership Interview', body:`
+<p>Applicants for a leadership role can expect questions along these lines:</p>
+<ol>
+<li>Tell me about a time you demonstrated leadership skills.</li>
+<li>How do you monitor the performance of the people you lead?</li>
+<li>Are you able to delegate responsibilities efficiently?</li>
+<li>How would you describe your leadership style?</li>
+<li>What can you do to motivate a team?</li>
+<li>What values are most important to you as a leader?</li>
+<li>How do you handle disagreements with your peers?</li>
+<li>How do you respond to criticism?</li>
+<li>How do you balance team input with the decision you feel is best?</li>
+<li>How do you measure your own performance in a group?</li>
+</ol>`},
+    ]
+  },
+  {
+    id:'membership', num:'6', title:'Membership', kicker:'How students join the team, stay eligible, and &mdash; rarely &mdash; leave it.',
+    sections:[
+      {id:'recruitment', title:'6.1 Recruitment &amp; Team Entry', body:`
+<p>There is one funnel onto the team. Every incoming member &mdash; however they first come to our attention &mdash; completes the same interview stage before joining. That keeps the process fair and ensures every new member has been vetted for team compatibility, regardless of how they applied.</p>
+<h3>Two Ways Into the Funnel</h3>
+<div class="role-grid">
+<div class="role-card"><h3>General Application <span style="color:#6e6e78;font-weight:600">&mdash; primary route</span></h3><p>During the annual recruitment window, any interested student applies through the public form.</p></div>
+<div class="role-card"><h3>Direct Referral <span style="color:#6e6e78;font-weight:600">&mdash; alternate entry point</span></h3><p>A student identified by a Team Mentor, an existing member (supported by two other full members), or a teacher. A referral skips nothing: the referred student still enters Stage 1 and must complete the Stage 2 interview like everyone else before being offered a spot.</p></div>
+</div>
+<div class="callout"><p><strong>Why interviews are never skipped:</strong> a referral means someone believes the student would be a good fit &mdash; it is not itself an offer of membership. The interview is what confirms team compatibility and sets expectations, for referred and general applicants alike.</p></div>
+<h3>Application Stages</h3>
+<ol>
+<li><strong>Stage 1</strong> &mdash; students submit a short interest form (referred students are entered here too). Select students are notified they've moved to Stage 2.</li>
+<li><strong>Stage 2</strong> &mdash; selected students, including referrals, complete an in-person or virtual interview to assess team compatibility and review Stage 1 responses.</li>
+<li><strong>Stage 3</strong> &mdash; students are notified whether they've been accepted to join.</li>
+</ol>
+<div class="callout red"><p><strong>Please note:</strong> the team has limited slots. Filling out the form &mdash; or being referred &mdash; does not guarantee selection.</p></div>`},
+      {id:'eligibility', title:'6.2 Eligibility and Requirements', body:`
+<p>FTC is fun and fulfilling, but it's also a rigorous program. Active members are expected to be in good academic standing:</p>
+<ul>
+<li>Minimum GPA &mdash; set your team's threshold</li>
+<li>Fewer than a set number of unexcused absences per semester</li>
+<li>No standing concerns flagged by an academic advisor</li>
+</ul>
+<div class="callout blue"><p><strong>Customize:</strong> define required weekly meeting hours and minimum attendance percentage for active status.</p></div>`},
+      {id:'allocation', title:'6.3 Team Allocation Process', body:`
+<ul>
+<li>All members joining the team are asked to express an area of interest</li>
+<li>This doesn't preclude them from other areas within FTC, but is their official designation</li>
+<li>All attempts to place a member on their preferred team will be made, but overall team composition takes priority</li>
+</ul>`},
+      {id:'rookie-status', title:'6.4 Rookie Status', body:`
+<p>A newly invited member is a Rookie for the duration of the season. They're officially on the roster, with a few notable exceptions:</p>
+<ul><li>Schedule availability is prioritized for full-time members</li><li>May be asked to carry out other duties related to the team</li></ul>`},
+      {id:'removal', title:'6.5 Removal From Team', body:`
+<p>Every member joins for their own reasons, and regardless of that reason, a key goal is to not diminish their experience. It's the most extreme measure available, and Mentors take it only when needed.</p>
+<p>Reasons for removal may include:</p>
+<ul>
+<li>Consistently disrupting the team's progress</li>
+<li>A pattern of missing meetings</li>
+<li>Failing to keep in communication with teammates</li>
+<li>Failure to adhere to academic requirements</li>
+</ul>
+<p>The team may also elect to remove a rookie after invitation when:</p>
+<ul><li>A majority of the team (50%) supports the decision</li><li>Mentors are involved in the discussion and support it</li></ul>`},
+    ]
+  },
+  {
+    id:'safety', num:'7', title:'Safety', kicker:'Never optional. Applies to every member, every meeting, every event &mdash; no deadline justifies cutting a safety corner.',
+    sections:[
+      {id:'ppe', title:'7.1 Personal Protective Equipment', body:`
+<ul>
+<li>Closed-toe shoes required in the build space at all times</li>
+<li>Safety glasses required when operating power tools, the drill press, or the soldering station</li>
+<li>Long hair tied back, loose jewelry and drawstrings removed before using machinery</li>
+</ul>`},
+      {id:'tool-use', title:'7.2 Tool Use', body:`
+<ul>
+<li>Only use tools you've been trained and approved to use &mdash; ask a mentor or the Safety Captain if unsure</li>
+<li>New members complete tool training before using power tools unsupervised</li>
+<li>Keep the build space, tools, and shared materials organized and put away after each meeting</li>
+</ul>`},
+      {id:'battery-safety', title:'7.3 Robot &amp; Battery Safety', body:`
+<ul>
+<li>Keep the robot powered off (battery disconnected) unless actively testing, with a spotter present</li>
+<li>Inspect batteries before each use &mdash; never use one that's swollen, punctured, or damaged</li>
+<li>Charge batteries only in designated, supervised areas; never leave charging batteries unattended overnight</li>
+<li>No horseplay in the build space &mdash; robots and tools can cause real injury</li>
+</ul>`},
+      {id:'incident-reporting', title:'7.4 Incident Reporting', body:`
+<ul>
+<li>Report any injury, near-miss, or damaged equipment to a mentor or the Safety Captain immediately, no matter how minor it seems</li>
+<li>Know the location of the first-aid kit and fire extinguisher in your build space and at every competition pit</li>
+</ul>
+<div class="callout blue"><p><strong>Customize:</strong> add facility-specific rules &mdash; building access hours, adult supervision requirements, etc.</p></div>`},
+      {id:'safety-captain', title:'7.5 Safety Captain', body:`
+<div class="role-grid">
+<div class="role-card"><h3>Safety Captain &mdash; Team-Wide</h3><p>A student role focused on keeping the team accountable to safe practices in the build space and at competitions.</p><ul>
+<li>Leads a brief safety review at the start of build season and before each competition</li>
+<li>Maintains the tool-training log and PPE supply</li>
+<li>First point of contact for injuries or near-misses; ensures they're logged and reported to a mentor</li>
+<li>Flags unsafe conditions or behavior to mentors without hesitation</li>
+</ul></div>
+</div>`},
+    ]
+  },
+  {
+    id:'youth-protection', num:'8', title:'Youth Protection Compliance', kicker:"FIRST requires every program to follow its Youth Protection Program (YPP) policy. This summarizes what that means for us &mdash; refer to FIRST's official YPP policy for the complete requirements.",
+    sections:[
+      {id:'screened-adults', title:'8.1 Screened Adults', body:`
+<ul>
+<li>Every adult mentor, coach, or chaperone with contact with students must complete FIRST's required background check and YPP training before the season starts</li>
+<li>Screening is renewed on FIRST's required schedule &mdash; track expiration dates and renew proactively</li>
+<li>An adult who hasn't completed screening may not be left alone with students or supervise a meeting unaccompanied</li>
+</ul>`},
+      {id:'two-deep', title:'8.2 Two-Deep Leadership', body:`
+<ul>
+<li>At least two screened adults (or one screened adult plus one other adult, per FIRST's policy) must be present at any meeting, practice, or team event</li>
+<li>No adult mentor should be alone in a closed room or vehicle with a single student</li>
+<li>The same principle applies to travel: chaperone-to-student ratios must meet FIRST's and the school's requirements before booking any trip</li>
+</ul>`},
+      {id:'comms-guidelines', title:'8.3 Communication Guidelines', body:`
+<ul>
+<li>Adult mentors should not privately message individual students on personal accounts &mdash; use team-wide or small-group channels visible to other adults</li>
+<li>Copy another mentor or parent when official communication with a student is needed outside team channels</li>
+<li>See <a href="#social-media" style="color:#f0eeea">Section 10, Team Instagram &amp; Social Media Policy</a> for photo and consent rules involving minors</li>
+</ul>`},
+      {id:'reporting-concern', title:'8.4 Reporting a Concern', body:`
+<p>Anyone &mdash; student, parent, or mentor &mdash; with a concern about a student's safety, harassment, bullying, or a Youth Protection policy violation should report it immediately.</p>
+<div class="callout blue"><p><strong>Customize:</strong> list your reporting contacts &mdash; school Title IX coordinator / administrator, Head Coach, and FIRST's own reporting channel.</p></div>
+<div class="callout"><p><strong>Reporting is not optional:</strong> concerns should be reported even if the person raising them isn't sure it rises to a policy violation &mdash; let the appropriate adult make that determination. No member should face retaliation for reporting a good-faith concern.</p></div>`},
+    ]
+  },
+  {
+    id:'competition-day', num:'9', title:'Competition Day Procedures', kicker:'Pack the night before. Know the flow. Represent the team well.',
+    sections:[
+      {id:'before-event', title:'9.1 Before the Event', body:`
+<p>Pack and confirm the night before, not the morning of.</p>
+<ul>
+<li>Robot, spare battery(ies), and charger</li>
+<li>Full spare parts kit &mdash; motors, servos, wiring, fasteners, wheels</li>
+<li>Laptop with the current code loaded, plus charger</li>
+<li>Driver Station / control system spares &mdash; game controller, cables</li>
+<li>Tool kit &mdash; screwdrivers, hex keys, zip ties, tape, multimeter</li>
+<li>Engineering Notebook (physical copy or confirmed digital access) and any printed judging materials</li>
+<li>Team paperwork &mdash; consent forms, roster, inspection checklist print-out</li>
+<li>Team shirts/spirit wear, extension cords, and a basic first-aid kit</li>
+</ul>`},
+      {id:'pit-setup', title:'9.2 Pit Setup', body:`
+<ul><li>Set up the pit table with tools and spare parts organized and accessible</li><li>Display the Engineering Notebook for judges to review</li><li>Keep walkways clear and follow the venue's pit safety rules</li></ul>`},
+      {id:'robot-inspection', title:'9.3 Robot Inspection', body:`
+<ul>
+<li>Complete a self-inspection using the official checklist before arriving, so formal inspection goes quickly</li>
+<li>Confirm sizing constraints, wiring (no exposed connections), and weight limits</li>
+<li>The Compliance Officer (<a href="#building-design" style="color:#f0eeea">Section 4.2</a>) leads this process and knows the current season's rules cold</li>
+</ul>`},
+      {id:'match-day', title:'9.4 Match Day Flow', body:`
+<ul>
+<li>Track the match queue and get the Drive Team to the queue line with time to spare</li>
+<li>Drive Coach reviews scouting data and sets a match plan with the Drive Team before each match</li>
+<li>Only the Drive Coach communicates with the Drive Team during a match, per FTC rules</li>
+<li>After each match, debrief briefly &mdash; what worked, what to adjust before the next match</li>
+</ul>`},
+      {id:'pit-etiquette', title:'9.5 Pit Etiquette &amp; Coopertition', body:`
+<ul><li>Be willing to lend tools, spare parts, or advice to other teams &mdash; coopertition is a judged value, not just a nice gesture</li><li>Represent the team positively when visiting other pits or interacting with judges and volunteers</li></ul>`},
+      {id:'alliance-selection', title:'9.6 Alliance Selection', body:`
+<ul><li>Scouting Lead briefs team captains with data-backed recommendations before selection begins</li><li>Have a ranked list of preferred alliance partners prepared in advance, with backups</li></ul>`},
+      {id:'end-of-day', title:'9.7 End of Day', body:`
+<ul><li>Pack up fully &mdash; double-check the pit area and lost-and-found before leaving</li><li>Thank volunteers and event staff</li><li>Update the Engineering Notebook with the day's results and lessons learned while they're fresh</li></ul>`},
+    ]
+  },
+  {
+    id:'social-media', num:'10', title:'Team Instagram &amp; Social Media Policy', kicker:"Our Instagram is often a stranger's or sponsor's first impression of the team. Everyone who posts, or is featured, follows these guidelines.",
+    sections:[
+      {id:'who-can-post', title:'10.1 Who Can Post', body:`
+<ul>
+<li>Only the Communications/Outreach Lead and designated social media team members have posting access</li>
+<li>All other members may submit photos, videos, or captions to the social media team for review and posting</li>
+<li>The mentor/coach has final approval authority over all content before it's posted</li>
+</ul>`},
+      {id:'content-guidelines', title:'10.2 Content Guidelines', body:`
+<ul>
+<li>Keep content positive, professional, and on-brand with team colors/logo where possible</li>
+<li>Feature a mix of build progress, competition results, member spotlights, sponsor thank-yous, and outreach events</li>
+<li>Caption clearly &mdash; include context (event, robot part, who's featured) and relevant hashtags</li>
+<li>Tag sponsors, FIRST, and partner organizations when appropriate</li>
+<li>Double-check spelling, team number, and event names before posting</li>
+</ul>`},
+      {id:'not-to-post', title:'10.3 What NOT to Post', body:`
+<ul>
+<li>No photos/videos of members without their (and, for minors, a guardian's) consent to appear on team social media &mdash; check the photo release list</li>
+<li>No unreleased game strategy, proprietary code, or competitive secrets before they're meant to be shared</li>
+<li>No personal information about members &mdash; home address, phone number, school schedule</li>
+<li>No content that mocks or disparages other teams, judges, volunteers, or sponsors</li>
+<li>No political, religious, or otherwise controversial content unrelated to the team's mission</li>
+<li>No unapproved use of copyrighted music, images, or logos</li>
+<li>Nothing you wouldn't want a college admissions officer, sponsor, or parent to see</li>
+</ul>`},
+      {id:'approval-workflow', title:'10.4 Approval Workflow', body:`
+<ol>
+<li>Member captures photo/video and drafts a suggested caption</li>
+<li>Submit to the social media team via the designated shared folder/chat</li>
+<li>Social media team reviews for guideline compliance and consent</li>
+<li>Mentor/coach gives final sign-off</li>
+<li>Post is published and, where relevant, cross-posted to other team channels</li>
+</ol>`},
+      {id:'responses', title:'10.5 Response to Comments/Messages', body:`
+<ul><li>Only designated social media team members reply to comments or DMs, in a friendly, professional tone</li><li>Escalate any inappropriate comments, messages, or concerning contact from strangers to the mentor/coach immediately</li><li>Do not engage in arguments or negative exchanges online on behalf of the team</li></ul>`},
+    ]
+  },
+  {
+    id:'appendix-design', num:'A', title:'Appendix A &mdash; Design Submission', kicker:'Working notes for turning a game reveal into a robot design &mdash; fill these in at the start of each season.',
+    sections:[
+      {id:'design-cycle', title:'Design and Planning', body:`
+<p>Before building a robot, we need to know what it will look like &mdash; not just that, but how it will move around the field, pick up game pieces, and so on.</p>
+<p>The blueprint doesn't need to be perfect. As you build and test, you will need to make changes &mdash; that's part of the design cycle.</p>
+<ul>
+<li><strong>Research</strong> &mdash; before landing on a design, know what you're designing for</li>
+<li><strong>Prototype</strong> &mdash; once you know the goal and possible paths to it, build a prototype</li>
+<li><strong>Test</strong> &mdash; even a great prototype won't be perfect; testing shows what works and what doesn't</li>
+<li><strong>Improve</strong> &mdash; make changes and modifications based on testing</li>
+</ul>`},
+      {id:'the-game', title:'The Game', body:`
+<p>The whole reason we build a robot is to compete in the game &mdash; the game shapes the design. Answer these once the season's game is revealed:</p>
+<ul>
+<li>What kind of objects will the robot collect? What size are they?</li>
+<li>What kind of objects will the robot place, and where?</li>
+<li>Are there obstacles the robot needs to go over?</li>
+<li>What actions does the robot need to perform &mdash; pick up, suck up, place, shoot, how much movement?</li>
+<li>What's the strategy priority for Autonomous, Main TeleOp, and Endgame?</li>
+</ul>`},
+      {id:'the-robot', title:'The Robot', body:`
+<p>You know some of what the robot needs to do &mdash; here's where to start scoping it:</p>
+<div class="role-grid">
+<div class="role-card"><h3>Chassis/Drivetrain</h3><p>The robot's "body," including the wheels. What makes the most sense for your team?</p></div>
+<div class="role-card"><h3>Intake</h3><p>The part responsible for collecting game pieces. What kind fits your strategy?</p></div>
+<div class="role-card"><h3>Delivery System/Arm</h3><p>Gets a collected game piece from Point A to Point B so it can be placed.</p></div>
+</div>
+<div class="callout blue"><p><strong>Sketches and designs:</strong> whether it's a CAD render or a physical drawing, attach or link any designs that help visualize the plan above &mdash; and keep them in the Engineering Notebook.</p></div>`},
+    ]
+  },
+  {
+    id:'appendix-glossary', num:'B', title:'Appendix B &mdash; FTC Glossary', kicker:'Common terms you’ll hear around the team &mdash; especially useful if you’re new to FTC.',
+    sections:[
+      {id:'glossary-terms', title:'Terms', body:'__GLOSSARY__'},
+    ]
+  },
+];
+
+const GLOSSARY = [
+  ['Autonomous (Auto)','The first ~30 seconds of a match where the robot operates entirely on pre-written code, with no driver input'],
+  ['TeleOp','The driver-controlled period of a match, following Autonomous'],
+  ['Endgame','The final portion of a match, often with special scoring tasks (e.g. hanging/parking)'],
+  ['Alliance','A group of (usually 2) teams competing together against another alliance in a match'],
+  ['Alliance Selection','The process at the end of qualification matches where top-ranked teams pick alliance partners for elimination rounds'],
+  ['Ranking Points (RP)','Points earned that determine a team’s rank at an event, separate from match score'],
+  ['Qualifier / Qualifying Match','A match played during the main tournament schedule, used for rankings'],
+  ['League Meet / League Tournament','A local season format where teams play several meets, culminating in a league tournament'],
+  ['Kickoff','The event each September where the new season’s game is revealed'],
+  ['Game Manual Part 1 / Part 2','FIRST’s official rulebooks; Part 1 covers general/administrative rules, Part 2 covers the season-specific game'],
+  ['Inspection','The pre-competition check confirming a robot meets all size, weight, and wiring rules'],
+  ['Pit','The team’s designated work area at a competition venue'],
+  ['Queue','The staging area/line where the Drive Team waits before a match'],
+  ['Control Hub / Expansion Hub','REV Robotics hardware that runs the robot’s code and connects motors/sensors'],
+  ['Driver Station','The device (phone/tablet) drivers use to control the robot during TeleOp'],
+  ['OpMode','A block of robot code (Autonomous or TeleOp) that can be selected and run on the Driver Station'],
+  ['Odometry','A method robots use to track their position on the field using wheel/sensor data'],
+  ['AprilTag','A visual marker used by robots’ cameras for field/object localization'],
+  ['Engineering Notebook','The team’s ongoing record of the design process, used heavily in judging'],
+  ['Gracious Professionalism','See Section 1.4, FIRST Core Values'],
+  ['Coopertition','See Section 1.4, FIRST Core Values'],
+];
+
+/* ──────────────────────────────────────────
+   IN-TEXT GLOSSARY LINKING
+────────────────────────────────────────── */
+const TERM_LINKS = [
+  ['Autonomous', 0], ['TeleOp', 1], ['Endgame', 2],
+  ['Alliance Selection', 4], ['Alliance', 3],
+  ['Ranking Points', 5],
+  ['Qualifying Match', 6], ['Qualifier', 6],
+  ['League Tournament', 7], ['League Meet', 7],
+  ['Kickoff', 8], ['Game Manual', 9], ['Inspection', 10], ['Pit', 11], ['Queue', 12],
+  ['Control Hub', 13], ['Expansion Hub', 13],
+  ['Driver Station', 14], ['OpMode', 15], ['Odometry', 16], ['AprilTag', 17],
+  ['Engineering Notebook', 18], ['Gracious Professionalism', 19], ['Coopertition', 20],
+].sort((a,b)=>b[0].length-a[0].length);
+
+const TERM_MAP = new Map(TERM_LINKS.map(([t,i])=>[t.toLowerCase(), i]));
+const TERM_PATTERN = new RegExp('\\b(' + TERM_LINKS.map(([t])=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|') + ')\\b', 'gi');
+
+function linkifyGlossary(root) {
+  if (!root) return;
+  const linked = new Set();
+  root.querySelectorAll('.glossary-term[data-term-idx]').forEach(el=>linked.add(+el.getAttribute('data-term-idx')));
+  root.querySelectorAll('p, li, td').forEach(container=>{
+    if (container.closest('.glossary-item')) return;
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+      acceptNode(node){
+        let anc = node.parentElement;
+        while (anc && anc !== container) {
+          if (anc.tagName === 'A' || (anc.classList && anc.classList.contains('glossary-term'))) return NodeFilter.FILTER_REJECT;
+          anc = anc.parentElement;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    let n; while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(node=>{
+      const text = node.nodeValue;
+      TERM_PATTERN.lastIndex = 0;
+      let m, lastIdx = 0, frag = null;
+      while ((m = TERM_PATTERN.exec(text))) {
+        const idx = TERM_MAP.get(m[0].toLowerCase());
+        if (idx === undefined || linked.has(idx)) continue;
+        linked.add(idx);
+        if (!frag) frag = document.createDocumentFragment();
+        frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+        const span = document.createElement('span');
+        span.className = 'glossary-term';
+        span.tabIndex = 0;
+        span.setAttribute('role', 'button');
+        span.setAttribute('data-term-idx', String(idx));
+        span.textContent = m[0];
+        frag.appendChild(span);
+        lastIdx = m.index + m[0].length;
+      }
+      if (frag) {
+        frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+        node.parentNode.replaceChild(frag, node);
+      }
+    });
+  });
+}
+
+function GlossaryPopup({data, onClose}) {
+  if (!data) return null;
+  const [term, def] = GLOSSARY[data.idx];
+  const width = 280;
+  const left = Math.min(Math.max(data.x - width/2, 12), window.innerWidth - width - 12);
+  const arrowLeft = Math.min(Math.max(data.x - left, 20), width - 20);
+  return(
+    <div className="glossary-popup" style={{position:'fixed',left,top:data.y,width,zIndex:500,animation:'fadeUp 0.16s cubic-bezier(0.16,1,0.3,1)'}} onClick={e=>e.stopPropagation()}>
+      <div style={{position:'absolute',top:-6,left:arrowLeft,width:11,height:11,background:'#17171c',borderLeft:'1px solid rgba(255,197,61,0.3)',borderTop:'1px solid rgba(255,197,61,0.3)',transform:'rotate(45deg)'}}/>
+      <div style={{position:'relative',background:'#17171c',border:'1px solid rgba(255,197,61,0.3)',borderRadius:12,padding:'14px 16px',boxShadow:'0 20px 56px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04)'}}>
+        <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:10,marginBottom:6}}>
+          <div style={{fontSize:'0.86rem',fontWeight:800,color:'var(--amber)',letterSpacing:'-0.005em'}}>{term}</div>
+          <button onClick={onClose} aria-label="Close" style={{background:'none',border:'none',color:'var(--muted)',cursor:'pointer',fontSize:'1.1rem',lineHeight:1,padding:0,flexShrink:0}}>&times;</button>
+        </div>
+        <p style={{fontSize:'0.8rem',color:'#c7c7cf',lineHeight:1.6,margin:0}}>{def}</p>
+        <a href="#appendix-glossary" onClick={onClose} style={{display:'inline-block',marginTop:10,fontSize:'0.72rem',fontWeight:700,color:'var(--muted)',textDecoration:'none'}}>Full glossary &rarr;</a>
+      </div>
+    </div>
+  );
+}
+
+function Sidebar({activeGroup, matchedIds}) {
+  const sectionsRef = useRef(null);
+  const [marker, setMarker] = useState({top:0,height:40});
+  const activeIndex = Math.max(0, GROUPS.findIndex(g=>g.id===activeGroup));
+  const activeMeta = GROUPS[activeIndex] || GROUPS[0];
+
+  useEffect(()=>{
+    function placeMarker(){
+      const link = sectionsRef.current && sectionsRef.current.querySelector('.group-link.active');
+      if (link) setMarker({top:link.offsetTop,height:link.offsetHeight});
+    }
+    placeMarker();
+    window.addEventListener('resize',placeMarker);
+    return()=>window.removeEventListener('resize',placeMarker);
+  },[activeGroup,matchedIds]);
+
+  return(
+    <aside className="guide-sidebar">
+      <div className="guide-sidebar-head">
+        <span className="guide-sidebar-label">On This Page</span>
+        <span className="guide-sidebar-readout">{String(activeIndex+1).padStart(2,'0')} / {String(GROUPS.length).padStart(2,'0')} · {activeMeta.title}</span>
+      </div>
+      <div className="guide-sidebar-sections" ref={sectionsRef}>
+        <span className="guide-sidebar-marker" aria-hidden="true" style={{transform:`translateY(${marker.top}px)`,height:marker.height}}/>
+        {GROUPS.map(g=>{
+          const visible = !matchedIds || matchedIds.has(g.id);
+          if (!visible) return null;
+          const meta = GROUP_META[g.id];
+          const active = activeGroup===g.id;
+          return(
+            <div className="guide-sidebar-group" key={g.id}>
+              <a href={`#${g.id}`} className={`group-link${active?' active':''}`}>
+                <span className="sidebar-icon" style={{background:active?`rgba(${meta.rgb},0.16)`:'rgba(255,255,255,0.04)'}}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={active?meta.color:'#6e6e78'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.icon}</svg>
+                </span>
+                <span className="num">{g.num}</span><span dangerouslySetInnerHTML={{__html:g.title}}/>
+              </a>
+              {active && <div className="guide-sidebar-subs">
+                {g.sections.map(s=><a className="sub-link" href={`#${s.id}`} key={s.id} dangerouslySetInnerHTML={{__html:s.title}}/>)}
+              </div>}
+            </div>
+          );
+        })}
+      </div>
+    </aside>
+  );
+}
+
+function MobileChapterNav({activeGroup, matchedIds}){
+  const [open,setOpen]=useState(false);
+  const activeIndex=Math.max(0,GROUPS.findIndex(g=>g.id===activeGroup));
+  const active=GROUPS[activeIndex]||GROUPS[0];
+  useEffect(()=>setOpen(false),[activeGroup]);
+  return(
+    <nav className="mobile-chapter-nav" aria-label="Handbook chapters">
+      <button className="mobile-chapter-trigger" aria-expanded={open} aria-controls="mobile-chapter-menu" onClick={()=>setOpen(v=>!v)}>
+        <span className="chapter-index">{String(activeIndex+1).padStart(2,'0')} / {String(GROUPS.length).padStart(2,'0')}</span>
+        <span className="chapter-current">{active.title}</span>
+        <span className="chapter-toggle" aria-hidden="true">+</span>
+      </button>
+      {open&&<div className="mobile-chapter-menu" id="mobile-chapter-menu">
+        {GROUPS.filter(g=>!matchedIds||matchedIds.has(g.id)).map(g=><a href={`#${g.id}`} key={g.id} className={g.id===activeGroup?'active':''} onClick={()=>setOpen(false)}><span className="num">{String(+g.num).padStart(2,'0')}</span><span>{g.title}</span></a>)}
+      </div>}
+    </nav>
+  );
+}
+
+function App() {
+  const [search, setSearch] = useState('');
+  const [activeGroup, setActiveGroup] = useState(GROUPS[0].id);
+  const [popup, setPopup] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const contentRef = useRef(null);
+
+  useEffect(()=>{
+    function onScroll(){
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      setProgress(max>0 ? Math.min(1, window.scrollY/max) : 0);
+    }
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    return ()=>window.removeEventListener('scroll', onScroll);
+  },[]);
+
+  useEffect(()=>{ linkifyGlossary(contentRef.current); },[search]);
+
+  useEffect(()=>{
+    function openFor(target){
+      const idx = +target.getAttribute('data-term-idx');
+      const rect = target.getBoundingClientRect();
+      setPopup({idx, x: rect.left + rect.width/2, y: rect.bottom + 10});
+    }
+    function onClick(e){
+      const term = e.target.closest('.glossary-term');
+      if (term) { e.preventDefault(); openFor(term); return; }
+      if (!e.target.closest('.glossary-popup')) setPopup(null);
+    }
+    function onKeydown(e){
+      if ((e.key==='Enter'||e.key===' ') && e.target.classList && e.target.classList.contains('glossary-term')) { e.preventDefault(); openFor(e.target); }
+      if (e.key==='Escape') setPopup(null);
+    }
+    function onScroll(){ setPopup(null); }
+    document.addEventListener('click', onClick);
+    document.addEventListener('keydown', onKeydown);
+    window.addEventListener('scroll', onScroll, {passive:true});
+    return ()=>{ document.removeEventListener('click', onClick); document.removeEventListener('keydown', onKeydown); window.removeEventListener('scroll', onScroll); };
+  },[]);
+
+  useEffect(()=>{
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting) setActiveGroup(e.target.id);});
+    },{rootMargin:'-96px 0px -70% 0px',threshold:0});
+    GROUPS.forEach(g=>{const el=document.getElementById(g.id); if(el) io.observe(el);});
+    return()=>io.disconnect();
+  },[search]);
+
+  useEffect(()=>{
+    if (prefersReducedMotion()) return;
+    let raf=0;
+    const heroFrame=document.querySelector('.handbook-page .subpage-hero .hero-media-frame');
+    function updateKinetics(){
+      raf=0;
+      const scrollY=window.scrollY;
+      if(heroFrame) heroFrame.style.setProperty('--hero-shift',`${Math.min(22,scrollY*.045)}px`);
+      document.querySelectorAll('.chapter-etch').forEach(etch=>{
+        const block=etch.parentElement;
+        const rect=block.getBoundingClientRect();
+        const offset=Math.max(-18,Math.min(18,(window.innerHeight*.5-(rect.top+rect.height*.5))*.035));
+        etch.style.setProperty('--etch-y',`${offset}px`);
+      });
+    }
+    function onScroll(){if(!raf)raf=requestAnimationFrame(updateKinetics)}
+    updateKinetics();
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll);
+    return()=>{cancelAnimationFrame(raf);window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll)};
+  },[search]);
+
+  window.useReveal(search);
+
+  const matchedIds = useMemo(()=>{
+    if (!search.trim()) return null;
+    const q = search.toLowerCase();
+    const set = new Set();
+    GROUPS.forEach(g=>{
+      const hay = (g.title+' '+g.kicker+' '+g.sections.map(s=>s.title+' '+s.body).join(' ')).toLowerCase();
+      if (hay.includes(q)) set.add(g.id);
+    });
+    return set;
+  },[search]);
+
+  const visibleGroups = useMemo(()=>GROUPS.filter(g=>!matchedIds||matchedIds.has(g.id)),[matchedIds]);
+
+  useEffect(()=>{
+    if(visibleGroups.length&&!visibleGroups.some(g=>g.id===activeGroup)) setActiveGroup(visibleGroups[0].id);
+  },[visibleGroups,activeGroup]);
+
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg)'}}>
+      <GlossaryPopup data={popup} onClose={()=>setPopup(null)}/>
+
+      <Nav active="Handbook" progress={progress}/>
+
+      <div>
+        <header className="subpage-hero">
+          <HeroMedia slot="HERO_HANDBOOK" accent="amber"/>
+          <div aria-hidden="true" className="subpage-etch">641</div>
+          <div className="subpage-hero-inner">
+            <div className="subpage-kicker"><b>05</b> Team reference</div>
+            <h1 className="subpage-title">Know the standard.<br/><span className="accent">Raise it.</span></h1>
+            <p className="subpage-deck">Structure, membership, safety, competition procedures, and team policy—everything a TaterScots member needs in one working reference.</p>
+          </div>
+        </header>
+
+        <section style={{padding:'40px 0 0'}}>
+          <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px'}}>
+            <div className="handbook-search">
+              <div className="handbook-search-field">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2" style={{position:'absolute',left:14,top:'50%',transform:'translateY(-50%)',pointerEvents:'none'}}><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input aria-label="Search the handbook" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search the handbook&hellip;" style={{width:'100%',background:'var(--surface)',border:'1px solid var(--border-mid)',borderRadius:10,padding:'10px 14px 10px 36px',color:'var(--white)',fontFamily:'Inter',fontSize:'0.875rem',outline:'none',transition:'border-color 0.2s'}} onFocus={e=>e.target.style.borderColor='rgba(217,43,43,0.3)'} onBlur={e=>e.target.style.borderColor='var(--border-mid)'}/>
+              </div>
+              <span className={`search-result-count${search.trim()?' is-active':''}`} aria-live="polite">{search.trim()?`${visibleGroups.length} ${visibleGroups.length===1?'chapter':'chapters'}`:`${GROUPS.length} chapters`}</span>
+            </div>
+          </div>
+        </section>
+
+        <section style={{padding:'32px 0 96px',position:'relative'}}>
+          <div style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:0,background:'radial-gradient(ellipse 30% 100% at 0% 50%, rgba(217,43,43,0.05) 0%, transparent 100%), radial-gradient(ellipse 30% 100% at 100% 50%, rgba(255,197,61,0.03) 0%, transparent 100%)'}}/>
+          <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+            <MobileChapterNav activeGroup={activeGroup} matchedIds={matchedIds}/>
+            <div className="guide-layout">
+              <Sidebar activeGroup={activeGroup} matchedIds={matchedIds}/>
+              <div className="guide-content" ref={contentRef}>
+                {visibleGroups.length===0 && (
+                  <div style={{textAlign:'center',padding:'80px 0',color:'var(--muted)',fontSize:'0.9rem'}}>No sections match &ldquo;{search}&rdquo; &mdash; try a different term.</div>
+                )}
+                {visibleGroups.map((g,gi)=>{
+                  const meta = GROUP_META[g.id];
+                  return(
+                  <div className="section-block reveal" id={g.id} key={g.id} data-delay={gi*30} style={{'--accent':meta.color}}>
+                    <div className="chapter-etch" aria-hidden="true">{String(+g.num).padStart(2,'0')}</div>
+                    <h2>
+                      <span className="group-icon-badge" style={{background:`rgba(${meta.rgb},0.12)`,border:`1px solid rgba(${meta.rgb},0.3)`}}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={meta.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.icon}</svg>
+                      </span>
+                      <span dangerouslySetInnerHTML={{__html:`${g.num}. ${g.title}`}}/>
+                    </h2>
+                    <p className="group-kicker" dangerouslySetInnerHTML={{__html:g.kicker}}/>
+                    {g.sections.map(s=>(
+                      <div id={s.id} key={s.id}>
+                        <h3 dangerouslySetInnerHTML={{__html:s.title}}/>
+                        {s.body==='__GLOSSARY__'
+                          ? <dl className="glossary-grid">{GLOSSARY.map(([t,d])=>(<div className="glossary-item" key={t}><dt>{t}</dt><dd>{d}</dd></div>))}</dl>
+                          : <div dangerouslySetInnerHTML={{__html:s.body}}/>
+                        }
+                      </div>
+                    ))}
+                  </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Footer/>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+name: Deploy TaterScots site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Stage public site files
+        run: |
+          mkdir -p _site/assets/randomPhotos _site/assets/team
+          cp index.html "Landing Page.html" About.html Team.html Guides.html Handbook.html _site/
+          cp tokens.css base.css home.css roster.js media.js _site/
+          cp Hooks.jsx Nav.jsx Footer.jsx HeroMedia.jsx Cards.jsx _site/
+          cp 1776100755044_TaterScots_E.png hero-home.webp season-states.webp _site/
+          cp assets/randomPhotos/about-hero-workshop.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/team-hero-competition.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/guides-hero-technical.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/handbook-hero-planning.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/discipline-engineering.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/discipline-programming.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/discipline-strategy.webp _site/assets/randomPhotos/
+          cp assets/randomPhotos/discipline-outreach.webp _site/assets/randomPhotos/
+          cp assets/team/shirley.png assets/team/tim.png assets/team/mia.png _site/assets/team/
+          cp assets/team/kiley.png assets/team/lex.png assets/team/cindy.png _site/assets/team/
+          cp assets/team/emily.png assets/team/lily.png assets/team/mru.png _site/assets/team/
+          cp assets/team/cynthia.webp assets/team/phoenix.webp _site/assets/team/
+          touch _site/.nojekyll
+
+      - name: Package static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v4

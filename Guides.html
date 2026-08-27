@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guides — TaterScots 641</title>
+<link rel="icon" type="image/png" href="1776100755044_TaterScots_E.png">
+<meta name="description" content="18 free engineering guides from TaterScots 641 — CAD workflows, PID tuning, AprilTag vision, motor selection, and more.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Guides — TaterScots 641">
+<meta property="og:description" content="18 free engineering guides — CAD workflows, PID tuning, AprilTag vision, motor selection, and more.">
+<meta property="og:image" content="1776100755044_TaterScots_E.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="base.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+.guide-body h2{font-size:1.15rem;font-weight:800;color:var(--white);margin:28px 0 12px;letter-spacing:-0.01em;line-height:1.3}
+.guide-body h3{font-size:0.95rem;font-weight:700;color:var(--white);margin:20px 0 8px}
+.guide-body p{font-size:0.9rem;color:var(--muted-2);line-height:1.85;margin-bottom:14px}
+.guide-body ul,.guide-body ol{padding-left:20px;margin-bottom:14px}
+.guide-body li{font-size:0.9rem;color:var(--muted-2);line-height:1.75;margin-bottom:4px}
+.guide-body code{font-family:var(--font-mono);font-size:0.82rem;background:rgba(0,0,0,0.45);border:1px solid rgba(217,43,43,0.2);color:var(--amber);padding:2px 6px;border-radius:4px}
+.guide-body pre{background:rgba(0,0,0,0.45);border:1px solid rgba(217,43,43,0.18);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:16px 18px;margin:14px 0;overflow-x:auto}
+.guide-body pre code{background:none;border:none;padding:0;color:var(--muted-2);font-size:0.82rem;line-height:1.7}
+.guide-body .callout{border-left:3px solid var(--amber);background:rgba(255,197,61,0.04);border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0}
+.guide-body .callout.red{border-color:var(--red);background:rgba(217,43,43,0.04)}
+.guide-body .callout.blue{border-color:var(--blue);background:rgba(77,159,255,0.04)}
+.guide-body .callout p{margin:0;color:var(--muted-2)}
+.guide-body .callout-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:5px}
+</style>
+</head>
+<body class="subpage guides-page">
+<div id="root"></div>
+<script src="roster.js"></script>
+<script src="media.js?v=20260827-guides"></script>
+<script type="text/babel" src="Hooks.jsx"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel" src="HeroMedia.jsx"></script>
+<script type="text/babel" src="Cards.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+/* ──────────────────────────────────────────
+   CATEGORIES
+────────────────────────────────────────── */
+const CATS = {
+  Programming:    { color:'#4d9fff', rgb:'77,159,255',   icon:<><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></> },
+  Engineering:    { color:'#ffc53d', rgb:'255,197,61',   icon:<><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></> },
+  'Team Management': { color:'#b392f0', rgb:'179,146,240', icon:<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></> },
+  'Social Media':  { color:'#f06292', rgb:'240,98,146',  icon:<><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></> },
+  Sponsorships:   { color:'#34a46c', rgb:'52,164,108',   icon:<><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></> },
+};
+
+/* ──────────────────────────────────────────
+   GUIDE CONTENT
+────────────────────────────────────────── */
+const GUIDES = [
+  // ── PROGRAMMING ──
+  {
+    id:'pid', cat:'Programming', title:'PID Control for FTC', difficulty:'Intermediate', mins:12, featured:true,
+    summary:'Tune proportional, integral, and derivative feedback loops for precise autonomous motion. Covers theory, implementation in Java, and field-tuning techniques.',
+    tags:['Java','Autonomous','Motion Control'],
+    body:`
+<h2>What Is PID?</h2>
+<p>A PID controller calculates an output based on the difference between a measured value and a desired setpoint. In FTC, you use it to drive motors to exact positions — for an arm, a drivetrain, or a slide.</p>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Tip</div><p>Start with just the P term. Get it oscillating, then back off. Only add I and D once P is close.</p></div>
+<h2>The Three Terms</h2>
+<ul>
+  <li><strong style="color:#f0eeea">P (Proportional)</strong> — output proportional to error. Larger kP = faster response, more overshoot.</li>
+  <li><strong style="color:#f0eeea">I (Integral)</strong> — corrects steady-state error. Accumulates error over time. Easy to over-tune.</li>
+  <li><strong style="color:#f0eeea">D (Derivative)</strong> — damps oscillation. Responds to rate of change. Noisy encoder data can make this unstable.</li>
+</ul>
+<h2>Java Implementation</h2>
+<pre><code>double kP = 0.01, kI = 0.0, kD = 0.002;
+double target = 1200; // encoder ticks
+double integral = 0, lastError = 0;
+
+while (opModeIsActive()) {
+    double error = target - motor.getCurrentPosition();
+    integral += error;
+    double derivative = error - lastError;
+    double output = kP*error + kI*integral + kD*derivative;
+    motor.setPower(output);
+    lastError = error;
+}</code></pre>
+<h2>Field Tuning Steps</h2>
+<ol>
+  <li>Set kI = 0 and kD = 0. Increase kP until the mechanism oscillates steadily.</li>
+  <li>Cut kP in half.</li>
+  <li>Add kD slowly until oscillation dampens.</li>
+  <li>Add kI only if there is consistent steady-state error under load.</li>
+</ol>
+<div class="callout red"><div class="callout-label" style="color:#d92b2b">Warning</div><p>Integral windup can cause violent runaway. Cap your integral accumulator — e.g. <code>integral = Math.max(-100, Math.min(100, integral))</code>.</p></div>
+`
+  },
+  {
+    id:'apriltag', cat:'Programming', title:'AprilTag Vision Pipeline', difficulty:'Advanced', mins:18, featured:true,
+    summary:'Detect field markers for reliable autonomous alignment. Covers camera calibration, pose estimation, and integration with the FTC SDK.',
+    tags:['Vision','AprilTag','SDK'],
+    body:`
+<h2>Why AprilTags?</h2>
+<p>AprilTags give you precise 3D pose data — position and orientation relative to the camera — which you can use to align the robot to a scoring position autonomously, with far more reliability than encoder-only approaches.</p>
+<h2>Hardware Setup</h2>
+<ul>
+  <li>Webcam mounted at a fixed, known position on the robot</li>
+  <li>Camera calibration file (intrinsic matrix) — specific to each camera unit</li>
+  <li>Field tags mounted at known field positions (provided by FIRST game manual)</li>
+</ul>
+<div class="callout blue"><div class="callout-label" style="color:#4d9fff">Info</div><p>The FTC SDK ships with built-in AprilTag support since v8.2. No external library required.</p></div>
+<h2>Basic Detection Code</h2>
+<pre><code>AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
+    .setDrawAxes(true)
+    .setDrawTagID(true)
+    .build();
+
+VisionPortal portal = new VisionPortal.Builder()
+    .setCamera(hardwareMap.get(WebcamName.class, "Webcam"))
+    .addProcessor(tagProcessor)
+    .build();
+
+List&lt;AprilTagDetection&gt; detections = tagProcessor.getDetections();
+for (AprilTagDetection d : detections) {
+    double x = d.ftcPose.x;
+    double y = d.ftcPose.y;
+    double yaw = d.ftcPose.yaw;
+}</code></pre>
+<h2>Alignment Strategy</h2>
+<p>Use yaw error to correct heading, and x/y offset to correct lateral position. Feed these as setpoints into your PID controllers for smooth, accurate docking.</p>
+`
+  },
+  {
+    id:'roadrunner', cat:'Programming', title:'Road Runner Path Following', difficulty:'Advanced', mins:22,
+    summary:'Build smooth, time-optimal autonomous trajectories using Road Runner. Covers tuning, trajectory building, and async following.',
+    tags:['Road Runner','Autonomous','Odometry'],
+    body:`
+<h2>What Road Runner Does</h2>
+<p>Road Runner generates smooth trajectories between waypoints, then follows them using a combination of feedforward control and correction feedback. It handles velocity and acceleration constraints automatically.</p>
+<h2>Tuning Order</h2>
+<ol>
+  <li>Drive encoder ticks per revolution</li>
+  <li>Max velocity and acceleration</li>
+  <li>kV, kA, kStatic feedforward constants</li>
+  <li>Heading PID</li>
+  <li>Translational PID</li>
+</ol>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Tip</div><p>Use the Road Runner Quickstart dashboard. It shows live pose and trajectory overlays — essential for debugging.</p></div>
+<h2>Building a Trajectory</h2>
+<pre><code>TrajectorySequence traj = drive.trajectorySequenceBuilder(startPose)
+    .splineTo(new Vector2d(36, -36), Math.toRadians(0))
+    .waitSeconds(1.5)
+    .lineToLinearHeading(new Pose2d(48, -12, Math.toRadians(90)))
+    .build();
+
+drive.followTrajectorySequence(traj);</code></pre>
+`
+  },
+  {
+    id:'statemachine', cat:'Programming', title:'State Machines for TeleOp', difficulty:'Beginner', mins:9,
+    summary:'Eliminate spaghetti button logic by modeling your robot as a state machine. Cleaner code, fewer bugs, easier to extend.',
+    tags:['Java','TeleOp','Architecture'],
+    body:`
+<h2>The Problem with Raw Button Checks</h2>
+<p>Checking <code>if (gamepad1.a)</code> directly in a loop leads to race conditions, conflicting actions, and code that nobody can read two weeks later. State machines solve this cleanly.</p>
+<h2>A Simple Intake State Machine</h2>
+<pre><code>enum IntakeState { IDLE, INTAKING, EJECTING }
+IntakeState intakeState = IntakeState.IDLE;
+
+// In loop():
+switch (intakeState) {
+    case IDLE:
+        intake.setPower(0);
+        if (gamepad1.right_bumper) intakeState = IntakeState.INTAKING;
+        if (gamepad1.left_bumper)  intakeState = IntakeState.EJECTING;
+        break;
+    case INTAKING:
+        intake.setPower(1.0);
+        if (!gamepad1.right_bumper) intakeState = IntakeState.IDLE;
+        break;
+    case EJECTING:
+        intake.setPower(-0.8);
+        if (!gamepad1.left_bumper) intakeState = IntakeState.IDLE;
+        break;
+}</code></pre>
+<div class="callout blue"><div class="callout-label" style="color:#4d9fff">Info</div><p>Each state owns its behavior entirely. Transitions are explicit. You can add logging, timeouts, and safety checks per-state without breaking anything else.</p></div>
+`
+  },
+
+  // ── ENGINEERING ──
+  {
+    id:'drivetrain', cat:'Engineering', title:'Drivetrain Selection Guide', difficulty:'Beginner', mins:11, featured:true,
+    summary:'Mecanum vs tank vs differential — what works in FTC and when. Covers torque, speed, maneuverability, and build complexity trade-offs.',
+    tags:['Drivetrain','Mechanical','Design'],
+    body:`
+<h2>The Three Main Choices</h2>
+<h3>Tank Drive (West Coast)</h3>
+<p>Two sets of wheels, each side driven together. Simple, robust, powerful. No strafing. Best when pushing and defense are priorities.</p>
+<h3>Mecanum Drive</h3>
+<p>Four mecanum wheels allow omnidirectional movement including strafing. Standard for most FTC robots since SKYSTONE. Costs you some pushing force and requires good software for straight-line driving.</p>
+<h3>Holonomic / Swerve</h3>
+<p>Maximum maneuverability. Extremely complex to build and program. Rarely worth it in FTC unless the game specifically rewards it.</p>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Recommendation</div><p>For most FTC games: start with mecanum. It gives you the field mobility to execute more complex game strategies.</p></div>
+<h2>Gear Ratio Selection</h2>
+<ul>
+  <li><strong style="color:#f0eeea">Speed-focused:</strong> ~14–18 ft/s — good for traversal-heavy games</li>
+  <li><strong style="color:#f0eeea">Balanced:</strong> ~10–13 ft/s — handles most games well</li>
+  <li><strong style="color:#f0eeea">Torque-focused:</strong> ~7–9 ft/s — for pushing, climbing, or heavy payloads</li>
+</ul>
+`
+  },
+  {
+    id:'linearmotion', cat:'Engineering', title:'Linear Motion Systems', difficulty:'Intermediate', mins:14,
+    summary:'Linear slides, lead screws, and lift mechanisms. Covers stage count, load capacity, bearing choices, and anti-backlash techniques.',
+    tags:['Linear Slides','Lift','Mechanical'],
+    body:`
+<h2>Types of Linear Motion</h2>
+<h3>Linear Slides (Cascade / Continuous)</h3>
+<p>Most common in FTC. Cascade extends stage-by-stage; continuous extends all stages simultaneously. goBILDA and REV both make reliable slide kits. Use continuous for tall lifts — fewer motors needed.</p>
+<h3>Lead Screws</h3>
+<p>High force, precise, self-locking when not powered. Slow. Good for mechanisms that need to hold position without constant motor power, like claw height or gripper actuation.</p>
+<div class="callout red"><div class="callout-label" style="color:#d92b2b">Warning</div><p>Unsupported slide ends will deflect under load. Always support the top stage with a guide rail or bearing block — especially above 18 inches of extension.</p></div>
+<h2>String vs. Chain vs. Belt</h2>
+<ul>
+  <li><strong style="color:#f0eeea">String/cord:</strong> light, cheap, easy to route. Stretches over time.</li>
+  <li><strong style="color:#f0eeea">Chain:</strong> durable, predictable. Heavy, noisy, needs tensioning.</li>
+  <li><strong style="color:#f0eeea">Belt:</strong> best of both. More expensive. GT2/HTD belts are reliable for FTC loads.</li>
+</ul>
+`
+  },
+  {
+    id:'cad', cat:'Engineering', title:'OnShape CAD Workflow', difficulty:'Beginner', mins:10,
+    summary:'Complete CAD workflow for designing FTC parts in OnShape. From document setup to exporting for fabrication.',
+    tags:['CAD','OnShape','Design'],
+    body:`
+<h2>Why OnShape?</h2>
+<p>OnShape is browser-based, free for student teams, and cloud-synced — the whole team works on the same document in real time. No versioning nightmares, no lost files.</p>
+<h2>Document Setup</h2>
+<ul>
+  <li>One document per robot season — use tabs for each assembly</li>
+  <li>Name parts with a consistent convention: <code>YYYY_PartName_v1</code></li>
+  <li>Use the MKCAD library for goBILDA and REV standard hardware</li>
+</ul>
+<div class="callout blue"><div class="callout-label" style="color:#4d9fff">Info</div><p>MKCAD is a free OnShape library with thousands of FTC-compatible parts. Add it via the Public tab in OnShape's feature library.</p></div>
+<h2>Design for Manufacturing</h2>
+<ul>
+  <li>Minimum 0.15mm clearance on sliding fits</li>
+  <li>Avoid walls thinner than 2mm for FDM printing</li>
+  <li>Model screw holes undersized by 0.2mm — drill or tap to final dimension</li>
+</ul>
+`
+  },
+  {
+    id:'3dprinting', cat:'Engineering', title:'3D Printing for FTC', difficulty:'Beginner', mins:8,
+    summary:'Filament selection, tolerancing, and stress testing custom parts. Covers PLA, PETG, and TPU for different robot applications.',
+    tags:['3D Printing','Materials','Fabrication'],
+    body:`
+<h2>Filament Selection</h2>
+<ul>
+  <li><strong style="color:#f0eeea">PLA</strong> — Easy to print, rigid, decent strength. Poor heat resistance. Good for brackets, mounts, and non-structural parts.</li>
+  <li><strong style="color:#f0eeea">PETG</strong> — Tougher and more heat-resistant than PLA. Slight flex. Good all-around choice for robot parts under moderate load.</li>
+  <li><strong style="color:#f0eeea">TPU</strong> — Flexible. Use for intake rollers, bumpers, and compliance elements. Print slow (25–35 mm/s).</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Rule of Thumb</div><p>If a part will see impact or high temperature (near motors), use PETG. If it will see repeated flex or grip surfaces, use TPU. Everything else: PLA is fine.</p></div>
+<h2>Print Settings for Structural Parts</h2>
+<ul>
+  <li>Layer height: 0.2mm for detail, 0.28mm for speed on structural parts</li>
+  <li>Infill: 40–60% Gyroid or Cubic for isotropic strength</li>
+  <li>Perimeters: 4+ walls on any load-bearing surface</li>
+</ul>
+`
+  },
+
+  // ── TEAM MANAGEMENT ──
+  {
+    id:'meetings', cat:'Team Management', title:'Running Effective Meetings', difficulty:'Beginner', mins:7, featured:true,
+    summary:'How to structure practice sessions so the team ships work, not just attends. Covers agendas, subteams, blockers, and documentation.',
+    tags:['Meetings','Leadership','Process'],
+    body:`
+<h2>The Problem with Unstructured Practice</h2>
+<p>Without structure, meetings become social time. Three hours pass and nothing that matters gets shipped. This isn't about being rigid — it's about protecting the hours you have.</p>
+<h2>A Simple Meeting Structure</h2>
+<ul>
+  <li><strong style="color:#f0eeea">First 10 minutes:</strong> Stand-up. Each subteam states what they're working on today and any blockers.</li>
+  <li><strong style="color:#f0eeea">Work block:</strong> Subteams split and execute. Captains float, unblock, and check in.</li>
+  <li><strong style="color:#f0eeea">Last 10 minutes:</strong> What got done. What's next. Any decisions that need the full team.</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Tip</div><p>Write down every decision in a shared doc. Memory is unreliable. New members can't read your mind.</p></div>
+<h2>Managing Subteams</h2>
+<p>Each subteam needs an owner — not just a group of people. The owner is responsible for knowing where the work stands and surfacing blockers early. Captains should know every blocker by the end of each session.</p>
+`
+  },
+  {
+    id:'documentation', cat:'Team Management', title:'Documentation That Actually Gets Written', difficulty:'Beginner', mins:6,
+    summary:'Building a documentation habit — engineering notebooks, decision logs, and guides — without making it feel like homework.',
+    tags:['Documentation','Notebook','Process'],
+    body:`
+<h2>Why Teams Don't Document</h2>
+<p>Documentation feels like extra work on top of the real work. It only stops feeling that way when you join a team that has good documentation and see how much time it saves.</p>
+<h2>What to Capture</h2>
+<ul>
+  <li><strong style="color:#f0eeea">Decisions:</strong> What did you decide and why? Not just the outcome — the reasoning. Future you needs the reasoning.</li>
+  <li><strong style="color:#f0eeea">Designs:</strong> Photos and sketches before and after major changes. CAD screenshots with brief notes.</li>
+  <li><strong style="color:#f0eeea">Test results:</strong> Numbers. Dates. Conditions. "It worked" is not a test result.</li>
+  <li><strong style="color:#f0eeea">Failures:</strong> The most important thing to document. What broke, why, and what you changed.</li>
+</ul>
+<div class="callout blue"><div class="callout-label" style="color:#4d9fff">Format</div><p>A shared Google Doc with dated entries is enough. Perfection is the enemy of the notebook.</p></div>
+`
+  },
+  {
+    id:'roles', cat:'Team Management', title:'Defining Roles on a Small Team', difficulty:'Beginner', mins:5,
+    summary:'How to assign ownership without over-specializing. Keeps everyone engaged, prevents single points of failure, and builds resilient knowledge.',
+    tags:['Roles','Leadership','Onboarding'],
+    body:`
+<h2>The Specialization Trap</h2>
+<p>Small teams often let people self-select into one narrow role and never leave it. When that person graduates, the team loses institutional knowledge that took years to build.</p>
+<h2>Ownership vs. Exclusivity</h2>
+<p>Ownership means someone is responsible for a system — not that nobody else can touch it. Every critical system should have a primary owner and a secondary who knows it well enough to maintain it.</p>
+<h2>Suggested Role Structure (10–12 members)</h2>
+<ul>
+  <li>2 Captains — strategy, scheduling, cross-team decisions</li>
+  <li>2–3 Programmers — autonomous, teleop, vision</li>
+  <li>2–3 Build/Machining — fabrication, assembly, hardware</li>
+  <li>1–2 CAD — design, tolerancing, 3D printing</li>
+  <li>1 Outreach — events, social, community programs</li>
+  <li>1 Strategy/Scouting — match analysis, alliance selection</li>
+</ul>
+`
+  },
+  {
+    id:'newmember', cat:'Team Management', title:'Onboarding New Members', difficulty:'Beginner', mins:8,
+    summary:'How to bring in a freshman or new student and get them contributing within the first two weeks — not two months.',
+    tags:['Onboarding','Culture','Leadership'],
+    body:`
+<h2>The Goal</h2>
+<p>A new member should be doing real, meaningful work within two weeks. Not watching. Not organizing parts bins. Real work — even if it's small.</p>
+<h2>Week One</h2>
+<ul>
+  <li>Assign them a buddy from the relevant subteam</li>
+  <li>Show them where everything lives — tools, docs, CAD files, codebase</li>
+  <li>Give them one specific, completable task with a clear definition of done</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Tip</div><p>The first task doesn't need to be impressive. It needs to be done. Completion builds confidence faster than complexity.</p></div>
+<h2>Week Two</h2>
+<ul>
+  <li>They should own something — even something small</li>
+  <li>Check in at the start and end of each session, not in the middle</li>
+  <li>Ask them what they got stuck on — normalize not knowing things</li>
+</ul>
+`
+  },
+
+  // ── SOCIAL MEDIA ──
+  {
+    id:'content-strategy', cat:'Social Media', title:'FTC Team Content Strategy', difficulty:'Beginner', mins:9, featured:true,
+    summary:'Building a social media presence that actually represents your team. What to post, when to post it, and how to stay consistent across a full season.',
+    tags:['Instagram','Content','Strategy'],
+    body:`
+<h2>Why It Matters</h2>
+<p>Your social media is visible to sponsors, college admissions, and recruit students considering joining. It's also a record of your work — one that survives alumni turnover.</p>
+<h2>Content Pillars</h2>
+<ul>
+  <li><strong style="color:#f0eeea">Build Progress</strong> — in-progress photos, time-lapses, part reveals. Post early and often — rough is fine.</li>
+  <li><strong style="color:#f0eeea">Competition Days</strong> — match recaps, alliance announcements, results. Post in real time where possible.</li>
+  <li><strong style="color:#f0eeea">Team Members</strong> — spotlight individual members and their roles. Humanizes the program for sponsors and recruits.</li>
+  <li><strong style="color:#f0eeea">Outreach</strong> — document every event. Shows sponsors what their money funds.</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Frequency</div><p>Aim for 2–3 posts per week in-season. Quality over quantity — a blurry photo with no caption helps nobody.</p></div>
+<h2>Caption Formula</h2>
+<p>State what's shown → explain why it matters → end with a question or call to action. Keep it direct. No hashtag walls.</p>
+`
+  },
+  {
+    id:'photography', cat:'Social Media', title:'Robot Photography on a Phone', difficulty:'Beginner', mins:6,
+    summary:'Getting usable photos of your robot and build sessions with just a phone camera. Lighting, angles, and editing basics.',
+    tags:['Photography','Content','Build'],
+    body:`
+<h2>The Number One Fix: Lighting</h2>
+<p>Bad lighting ruins any camera. Most build spaces have overhead fluorescent — yellow, unflattering, harsh shadows. Fix it by photographing near a window, or use a cheap LED panel light to fill from the side.</p>
+<h2>Angles That Work</h2>
+<ul>
+  <li><strong style="color:#f0eeea">45° overhead:</strong> shows the full robot footprint. Good for overall reveal shots.</li>
+  <li><strong style="color:#f0eeea">Eye level, close:</strong> shows mechanism detail. Get close, use your phone's portrait mode.</li>
+  <li><strong style="color:#f0eeea">Action (during practice):</strong> capture from behind the drive team. Frame the field, not just the robot.</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Editing</div><p>Lightroom Mobile is free. Bump exposure, drop highlights, lift shadows slightly. Add a small amount of clarity for parts and mechanisms.</p></div>
+`
+  },
+  {
+    id:'instagram-reels', cat:'Social Media', title:'Short-Form Video for FTC Teams', difficulty:'Intermediate', mins:10,
+    summary:'Creating Reels and TikToks that show your robot\'s capability. What performs, what doesn\'t, and how to edit quickly between competitions.',
+    tags:['Reels','Video','Content'],
+    body:`
+<h2>What Performs</h2>
+<p>Mechanism reveals, before/after design iterations, competition match highlights, and satisfying autonomous runs. Raw, unedited footage of robots doing impressive things consistently outperforms overproduced content.</p>
+<h2>Filming for Reels</h2>
+<ul>
+  <li>Film in portrait (9:16) from the start — cropping landscape kills quality</li>
+  <li>Slow motion (240fps) for fast mechanisms — intakes, flywheels, claw actuation</li>
+  <li>Keep clips short: 2–5 seconds per cut. FTC attention spans are short.</li>
+</ul>
+<div class="callout blue"><div class="callout-label" style="color:#4d9fff">Tool</div><p>CapCut is free and handles most FTC editing needs: auto-captions, tempo cuts, and basic color grading.</p></div>
+<h2>Quick Edit Workflow</h2>
+<ol>
+  <li>Film 3–5 angles of the same mechanism</li>
+  <li>Cut to music beat — pick something instrumental with a clear tempo</li>
+  <li>Add one line of text caption, no more</li>
+  <li>Export and post within 24 hours of filming</li>
+</ol>
+`
+  },
+
+  // ── SPONSORSHIPS ──
+  {
+    id:'sponsor-pitch', cat:'Sponsorships', title:'Writing a Sponsorship Pitch', difficulty:'Intermediate', mins:12, featured:true,
+    summary:'How to write a sponsorship proposal that gets read and funded. Structure, ask tiers, and what sponsors actually want to see.',
+    tags:['Sponsorship','Writing','Fundraising'],
+    body:`
+<h2>What Sponsors Actually Want</h2>
+<p>Most local business sponsors are not robotics enthusiasts. They want brand visibility, community goodwill, and a clean professional interaction. Lead with that — not your robot specs.</p>
+<h2>Proposal Structure</h2>
+<ul>
+  <li><strong style="color:#f0eeea">Who you are:</strong> One paragraph. School, program, what FTC is. No jargon.</li>
+  <li><strong style="color:#f0eeea">What you've done:</strong> Competitions, outreach reach, guide readership. Concrete numbers only.</li>
+  <li><strong style="color:#f0eeea">What you're asking for:</strong> Specific dollar amount or in-kind contribution. Do not leave this vague.</li>
+  <li><strong style="color:#f0eeea">What they get:</strong> Logo on robot, jersey, website, social posts. Be specific and realistic.</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Tip</div><p>Tiered asks work better than a single number. Offer three levels — e.g. $500, $1,500, $3,000 — with different visibility benefits at each tier.</p></div>
+<h2>Follow-Up</h2>
+<p>Send one follow-up email after 10 business days. Reference your original email in the first line. Keep it to three sentences. A clean, professional follow-up gets more responses than the original pitch did.</p>
+`
+  },
+  {
+    id:'grant-writing', cat:'Sponsorships', title:'FTC Grant Sources and Applications', difficulty:'Intermediate', mins:11,
+    summary:'Where to find grants available to FTC teams, how to identify the right ones to apply for, and how to write an application that gets funded.',
+    tags:['Grants','Funding','Writing'],
+    body:`
+<h2>Where to Look</h2>
+<ul>
+  <li><strong style="color:#f0eeea">FIRST Senior Mentor Program</strong> — connects teams with industry professionals who sometimes bring funding</li>
+  <li><strong style="color:#f0eeea">FIRST in Florida</strong> — annual local grants for registered Florida teams</li>
+  <li><strong style="color:#f0eeea">STEM.org grants</strong> — small grants ($500–$2,000) for K-12 programs</li>
+  <li><strong style="color:#f0eeea">Local community foundations</strong> — most counties have one. Google "[your county] community foundation grants"</li>
+  <li><strong style="color:#f0eeea">Hardware company programs:</strong> REV, goBILDA, and Sparkfun periodically offer team discount programs</li>
+</ul>
+<div class="callout red"><div class="callout-label" style="color:#d92b2b">Caution</div><p>Only apply for grants your team can realistically fulfill. Misrepresenting reach or impact burns bridges with funders permanently.</p></div>
+<h2>Application Tips</h2>
+<p>Grant reviewers read hundreds of applications. Lead with your most impressive concrete achievement in the first sentence. Use bullet points wherever the format allows. Answer every question directly — do not pivot to what you wanted to say.</p>
+`
+  },
+  {
+    id:'sponsor-relations', cat:'Sponsorships', title:'Maintaining Sponsor Relationships', difficulty:'Beginner', mins:6,
+    summary:'How to retain sponsors across multiple seasons. What to send, when to send it, and how to make renewal an easy yes.',
+    tags:['Sponsorship','Retention','Communication'],
+    body:`
+<h2>The Basics Most Teams Skip</h2>
+<p>Most teams send a proposal, get funded, and then go silent until next year's ask. Sponsors notice. The ones who get renewed send updates.</p>
+<h2>A Simple Sponsor Update Schedule</h2>
+<ul>
+  <li><strong style="color:#f0eeea">Start of season:</strong> Brief email — "Season starts [date], here's our competition schedule."</li>
+  <li><strong style="color:#f0eeea">After each qualifier:</strong> One paragraph result + one photo of the robot in action</li>
+  <li><strong style="color:#f0eeea">End of season:</strong> Summary — results, outreach impact, how their funds were used</li>
+  <li><strong style="color:#f0eeea">Renewal:</strong> Goes out with the end-of-season summary. Easy yes if they've been informed all year.</li>
+</ul>
+<div class="callout"><div class="callout-label" style="color:#ffc53d">Tip</div><p>Include a photo of the robot with their logo visible in every sponsor-facing communication. It's what they care about most.</p></div>
+`
+  },
+];
+
+const DIFF_COLORS = { Beginner:'#34a46c', Intermediate:'#ffc53d', Advanced:'#d92b2b' };
+
+const CAT_MEDIA_KEY = {
+  Programming: 'GUIDE_CARD_PROGRAMMING',
+  Engineering: 'GUIDE_CARD_ENGINEERING',
+  'Team Management': 'GUIDE_CARD_TEAM_MANAGEMENT',
+  'Social Media': 'GUIDE_CARD_SOCIAL_MEDIA',
+  Sponsorships: 'GUIDE_CARD_SPONSORSHIPS',
+};
+
+function GuideCard({guide, onClick, delay, large}) {
+  const [hov,setHov]=useState(false);
+  const cat=CATS[guide.cat]||{color:'#9c9ca6',rgb:'146,146,160'};
+  const media = window.MEDIA && window.MEDIA[CAT_MEDIA_KEY[guide.cat]];
+  const diffColors = {Beginner:'52,164,108',Intermediate:'255,197,61',Advanced:'217,43,43'};
+  const diffRgb = diffColors[guide.difficulty] || '134,134,143';
+  return(
+    <div className={`reveal${large?' bento-lg':''}`} data-delay={delay}
+      onClick={onClick}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{
+        background:'var(--surface)', border:`1px solid ${hov?'var(--border-mid)':'var(--border)'}`,
+        borderRadius:18, overflow:'hidden', cursor:'pointer',
+        transform:hov?'translateY(-5px)':'',
+        boxShadow:hov?'var(--shadow-lg)':'',
+        transition:'all 0.27s cubic-bezier(0.16,1,0.3,1)', position:'relative',
+        display:'flex', flexDirection: large ? 'column' : 'column',
+        height:'100%',
+      }}>
+      {large && <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:'linear-gradient(90deg,transparent,#d92b2b 30%,#ffc53d 70%,transparent)',opacity:hov?0.9:0.5,transition:'opacity 0.27s',zIndex:2}}/>}
+      <div style={{height: large ? '58%' : 104, minHeight: large ? 160 : 104, position:'relative', overflow:'hidden', flexShrink:0}}>
+        {media && media.src
+          ? <img src={media.src} alt="" style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',filter:hov?'brightness(0.6) saturate(1.05)':'brightness(0.45) saturate(0.95)',transition:'filter 0.3s',transform:hov?'scale(1.04)':'scale(1)'}}/>
+          : <div style={{position:'absolute',inset:0,background:'linear-gradient(135deg,#0c0e16,#12101c)'}}/>
+        }
+        <div style={{position:'absolute',inset:0,background:`linear-gradient(to top, rgba(9,9,11,0.55) 0%, rgba(9,9,11,0.1) 60%)`}}/>
+        <div style={{position:'absolute',bottom:12,left:14,width: large?38:32, height: large?38:32, borderRadius:9,background:'rgba(9,9,11,0.65)',backdropFilter:'blur(6px)',border:`1px solid rgba(${cat.rgb},0.35)`,display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <svg width={large?18:16} height={large?18:16} viewBox="0 0 24 24" fill="none" stroke={cat.color} strokeWidth="1.8">{cat.icon}</svg>
+        </div>
+      </div>
+      <div style={{padding: large ? '22px 24px 24px' : '18px 20px 20px', flex:1, display:'flex', flexDirection:'column', gap: large?12:8}}>
+        <span style={{fontSize:'0.68rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',color:cat.color}}>{guide.cat}</span>
+        <div style={{fontSize: large ? '1.3rem' : '0.95rem',fontWeight:700,color:'var(--white)',lineHeight:1.25,letterSpacing:'-0.01em'}}>{guide.title}</div>
+        {large && <p style={{fontSize:'0.88rem',color:'var(--muted)',lineHeight:1.65,margin:0,flex:1}}>{guide.summary}</p>}
+        {!large && <div style={{flex:1}}/>}
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:large?12:8,borderTop:'1px solid var(--border)'}}>
+          <div style={{fontSize:'0.75rem',color:'var(--muted)',display:'flex',alignItems:'center',gap:7}}>
+            <span style={{width:6,height:6,borderRadius:'50%',background:`rgb(${diffRgb})`,flexShrink:0}} title={guide.difficulty}/>
+            {guide.difficulty} · {guide.mins} min
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:4,color:hov?'var(--red)':'var(--muted)',fontSize:'0.75rem',fontWeight:600,transition:'color 0.2s'}}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{transition:'transform 0.2s',transform:hov?'translateX(3px)':''}}><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GuideReader({guide, onBack}) {
+  const cat=CATS[guide.cat]||{color:'#9c9ca6',rgb:'146,146,160'};
+  const diffCol=DIFF_COLORS[guide.difficulty]||'#86868f';
+  useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'});},[guide]);
+  return(
+    <div style={{animation:'fadeUp 0.35s cubic-bezier(0.16,1,0.3,1)'}}>
+      <div style={{background:'var(--surface)',borderBottom:'1px solid var(--border)',padding:'16px 0'}}>
+        <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px'}}>
+          <button onClick={onBack} style={{display:'inline-flex',alignItems:'center',gap:8,fontFamily:'Inter',fontSize:'0.8rem',fontWeight:600,color:'var(--muted)',background:'none',border:'none',cursor:'pointer',padding:0,transition:'color 0.2s'}} onMouseEnter={e=>e.currentTarget.style.color='var(--white)'} onMouseLeave={e=>e.currentTarget.style.color='var(--muted)'}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            All Guides
+          </button>
+        </div>
+      </div>
+      <div style={{background:'var(--bg)',padding:'60px 0 48px',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',inset:0,background:`radial-gradient(ellipse 60% 70% at 50% 0%, rgba(${cat.rgb},0.06) 0%, transparent 55%)`,pointerEvents:'none'}}/>
+        <div style={{maxWidth:760,margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+          <div style={{display:'flex',gap:8,marginBottom:20,flexWrap:'wrap'}}>
+            <span style={{fontSize:'9px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'3px 9px',borderRadius:100,background:`rgba(${cat.rgb},0.1)`,color:cat.color,border:`1px solid rgba(${cat.rgb},0.2)`}}>{guide.cat}</span>
+            <span style={{fontSize:'9px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'3px 9px',borderRadius:100,background:`rgba(${guide.difficulty==='Beginner'?'52,164,108':guide.difficulty==='Intermediate'?'255,197,61':'217,43,43'},0.09)`,color:diffCol,border:`1px solid rgba(${guide.difficulty==='Beginner'?'52,164,108':guide.difficulty==='Intermediate'?'255,197,61':'217,43,43'},0.18)`}}>{guide.difficulty}</span>
+            <span style={{fontSize:'9px',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.09em',padding:'3px 9px',borderRadius:100,background:'rgba(255,255,255,0.04)',color:'var(--muted)',border:'1px solid var(--border-mid)',display:'flex',alignItems:'center',gap:5}}>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {guide.mins} min
+            </span>
+          </div>
+          <h1 style={{fontSize:'var(--text-4xl)',lineHeight:1.1,marginBottom:16}}>{guide.title}</h1>
+          <p style={{fontSize:'1rem',color:'var(--muted)',lineHeight:1.8}}>{guide.summary}</p>
+          <div style={{display:'flex',gap:6,marginTop:16,flexWrap:'wrap'}}>
+            {guide.tags.map((t,i)=><span key={i} style={{fontSize:'9px',fontWeight:600,padding:'2px 8px',borderRadius:100,background:'rgba(255,255,255,0.04)',color:'var(--muted)',border:'1px solid var(--border-mid)'}}>{t}</span>)}
+          </div>
+        </div>
+      </div>
+      <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(217,43,43,0.4) 30%,rgba(255,197,61,0.2) 70%,transparent)',opacity:0.5}}/>
+      <div style={{maxWidth:760,margin:'0 auto',padding:'48px 32px 96px'}}>
+        <div className="guide-body" dangerouslySetInnerHTML={{__html:guide.body}}/>
+        <div style={{marginTop:56,paddingTop:24,borderTop:'1px solid var(--border)',display:'flex',justifyContent:'flex-start'}}>
+          <button onClick={onBack} style={{display:'inline-flex',alignItems:'center',gap:8,fontFamily:'Inter',fontSize:'0.875rem',fontWeight:600,padding:'10px 20px',borderRadius:10,border:'1px solid var(--border-mid)',background:'transparent',color:'var(--muted-2)',cursor:'pointer',transition:'all 0.2s'}} onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--border-hover)';e.currentTarget.style.color='var(--white)'}} onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border-mid)';e.currentTarget.style.color='var(--muted-2)'}}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to All Guides
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  window.useReveal();
+
+  const [activeGuide, setActiveGuide] = useState(null);
+  const [activeCat, setActiveCat] = useState('All');
+  const [search, setSearch] = useState('');
+
+  const cats = ['All', ...Object.keys(CATS)];
+
+  const filtered = useMemo(()=>{
+    let list = activeCat==='All' ? GUIDES : GUIDES.filter(g=>g.cat===activeCat);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(g => g.title.toLowerCase().includes(q) || g.summary.toLowerCase().includes(q) || g.tags.some(t=>t.toLowerCase().includes(q)));
+    }
+    return list;
+  }, [activeCat, search]);
+
+  const featured = GUIDES.filter(g=>g.featured);
+
+  return(
+    <div style={{minHeight:'100vh',background:'var(--bg)'}}>
+
+      <Nav active="Guides"/>
+
+      {activeGuide
+        ? <div style={{paddingTop:64}}><GuideReader guide={activeGuide} onBack={()=>{setActiveGuide(null);window.scrollTo({top:0});}} /></div>
+        : (
+          <div>
+            <header className="subpage-hero">
+              <HeroMedia slot="HERO_GUIDES" accent="amber"/>
+              <div aria-hidden="true" className="subpage-etch">OPEN</div>
+              <div className="subpage-hero-inner">
+                <div className="subpage-kicker"><b>04</b> Open knowledge</div>
+                <h1 className="subpage-title">Learn it.<br/><span className="accent">Share it.</span></h1>
+                <p className="subpage-deck">{GUIDES.length} field-tested guides across programming, engineering, team management, social media, and sponsorships—free for every team.</p>
+              </div>
+            </header>
+
+            <section style={{padding:'72px 0 0',position:'relative'}}>
+              <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px'}}>
+                <div className="reveal" style={{marginBottom:28}}>
+                  <div className="editorial-section-label"><b>01</b> Start here</div>
+                  <h2 style={{fontSize:'clamp(2rem,4vw,3.2rem)',letterSpacing:'-.03em'}}>Featured guides</h2>
+                </div>
+                <div className="bento-grid reveal" style={{marginBottom:72}}>
+                  {featured.map((g,i)=><GuideCard key={g.id} guide={g} onClick={()=>setActiveGuide(g)} delay={i*60} large={i===0}/>)}
+                </div>
+              </div>
+            </section>
+
+            <div style={{height:1,background:'linear-gradient(90deg,transparent,rgba(255,255,255,0.05) 50%,transparent)',margin:'0 32px'}}/>
+
+            <section style={{padding:'64px 0 96px',position:'relative',overflow:'hidden'}}>
+              <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 30% 100% at 0% 50%, rgba(217,43,43,0.07) 0%, transparent 100%), radial-gradient(ellipse 30% 100% at 100% 50%, rgba(255,197,61,0.04) 0%, transparent 100%)'}}/>
+              <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+                <div style={{display:'flex',gap:12,alignItems:'center',marginBottom:36,flexWrap:'wrap'}}>
+                  <div style={{position:'relative',flex:'1',minWidth:200,maxWidth:320}}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2" style={{position:'absolute',left:12,top:'50%',transform:'translateY(-50%)',pointerEvents:'none'}}><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search guides…" style={{width:'100%',background:'var(--surface)',border:'1px solid var(--border-mid)',borderRadius:10,padding:'9px 12px 9px 34px',color:'var(--white)',fontFamily:'Inter',fontSize:'0.875rem',outline:'none',transition:'border-color 0.2s'}} onFocus={e=>e.target.style.borderColor='rgba(217,43,43,0.3)'} onBlur={e=>e.target.style.borderColor='var(--border-mid)'}/>
+                  </div>
+                  <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+                    {cats.map(c=>{
+                      const cat=CATS[c];
+                      const isActive=activeCat===c;
+                      return(
+                        <button key={c} onClick={()=>setActiveCat(c)} style={{fontFamily:'Inter',fontSize:'0.78rem',fontWeight:600,letterSpacing:'0.02em',padding:'6px 13px',borderRadius:100,cursor:'pointer',transition:'all 0.18s',background:isActive?(cat?cat.color:'var(--red)'):'var(--surface)',border:`1px solid ${isActive?(cat?cat.color:'var(--red)'):'var(--border)'}`,color:isActive?'#fff':'var(--muted)'}}>
+                          {c}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div style={{fontSize:'0.78rem',color:'var(--muted)',marginBottom:20}}>
+                  {filtered.length} {filtered.length===1?'guide':'guides'}{activeCat!=='All'?` in ${activeCat}`:''}
+                  {search&&` matching "${search}"`}
+                </div>
+
+                {filtered.length===0
+                  ? <div style={{textAlign:'center',padding:'80px 0',color:'var(--muted)',fontSize:'0.9rem'}}>No guides match — try a different filter or search term.</div>
+                  : <div className="auto-grid cards-lg">
+                      {filtered.map((g,i)=><GuideCard key={g.id} guide={g} onClick={()=>setActiveGuide(g)} delay={i*40}/>)}
+                    </div>
+                }
+              </div>
+            </section>
+
+            <Footer/>
+          </div>
+        )
+      }
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
