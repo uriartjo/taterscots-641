@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — TaterScots 641</title>
 <link rel="icon" type="image/png" href="1776100755044_TaterScots_E.png">
-<meta name="description" content="TaterScots 641 was founded in 2020 by Saint Andrew's School students to compete in FIRST Tech Challenge. Learn our story and mission.">
+<meta name="description" content="Team 641 has competed in FIRST Tech Challenge since 2007, with 34 official events and eight awards recorded since 2019.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About — TaterScots 641">
-<meta property="og:description" content="Founded in 2020 by Saint Andrew's School students to compete in FIRST Tech Challenge. Our story and mission.">
+<meta property="og:description" content="Team 641 has competed in FIRST Tech Challenge since 2007. Explore the TaterScots' official event and award record.">
 <meta property="og:image" content="1776100755044_TaterScots_E.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="tokens.css">
-<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="base.css?v=20260827-awards">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -32,21 +32,24 @@ const { useState, useEffect, useRef } = React;
 
 /* ── Data ── */
 const SEASONS = [
-  { year:'2020–21', name:'ULTIMATE GOAL℠', season:1, result:'Rookie Year', state:false,
-    summary:'The team\'s first season — everything was new. Four founding members learned the competition structure, machined their first parts, and shipped a robot that could score autonomously. They didn\'t advance past regionals, but they came back with a plan.',
-    highlights:['First robot fully designed in-house','Autonomous scoring achieved in 4 of 6 matches','Finished 6th at regional qualifier'], members:12, color:'#9c9ca6' },
-  { year:'2021–22', name:'FREIGHT FRENZY℠', season:2, result:'State Qualifier', state:true,
-    summary:'The breakthrough season. The team qualified for the Florida State Championship for the first time, driven by a reliable autonomous routine and a consistent teleop cycle. Alliance selection strategy was formalized this year.',
-    highlights:['1st Florida State Championship qualification','Autonomous reliability: 91% over full season','Introduced formal scouting system'], members:11, color:'#d92b2b' },
-  { year:'2022–23', name:'POWER PLAY℠', season:3, result:'State Qualifier', state:true,
-    summary:'Back to state. The team added AprilTag vision detection to the autonomous stack, significantly improving scoring consistency. Outreach programming expanded to three partner schools this season.',
-    highlights:['2nd consecutive State qualification','AprilTag vision pipeline deployed','Outreach reached 120+ students'], members:11, color:'#d92b2b' },
-  { year:'2023–24', name:'CENTERSTAGE℠', season:4, result:'State Qualifier', state:true,
-    summary:'Third time at state. The team fielded its most mechanically reliable robot yet — a four-bar linkage arm designed entirely in OnShape. Three of twelve published engineering guides were written this season.',
-    highlights:['3rd consecutive State qualification','Four-bar arm mechanism debuted','3 engineering guides published publicly'], members:10, color:'#d92b2b' },
-  { year:'2024–25', name:'INTO THE DEEP℠', season:5, result:'Active Season', state:false,
-    summary:'The current season. The team is competing with a refined drivetrain and improved vision subsystem. Two qualifier wins so far, with Regional Championship and State ahead.',
-    highlights:['1st Place — Qualifier at Saint Andrew\'s','2nd Place — Qualifier at Pine Crest','Regional Championship upcoming'], members:11, color:'#ffc53d' },
+  { year:'2019', name:'FTC LEAGUE CHAMPIONSHIP', events:1, result:'League Championship', state:false, active:false,
+    summary:'The earliest event in the current FTC Event Web record for Team 641 is the 2019 FTC League Championship.',
+    highlights:['FTC League Championship'], awards:[], color:'#9c9ca6' },
+  { year:'2020–21', name:'SOUTH FLORIDA REMOTE LEAGUE', events:6, result:'Remote League', state:false, active:false,
+    summary:'Team 641 competed in six recorded South Florida remote league events: one scrimmage and five league meets.',
+    highlights:['South Florida League Scrimmage Remote 1','South Florida League Meets Remote 2–6'], awards:[], color:'#9c9ca6' },
+  { year:'2022–23', name:'SOUTH FLORIDA LEAGUE', events:4, result:'League Tournament', state:false, active:false,
+    summary:'The official record lists three South Florida league meets followed by the South Florida League Tournament.',
+    highlights:['South Florida League Meets #1–3','South Florida League Tournament'], awards:[], color:'#9c9ca6' },
+  { year:'2023–24', name:'FLORIDA F.U.N. + CHAMPIONSHIP', events:6, result:'State Championship', state:true, active:false,
+    summary:'After three F.U.N. league meets, Team 641 earned two awards at the league tournament and competed at the Florida Championship.',
+    highlights:['Finalist Alliance — 1st Team Selected · F.U.N. League Tournament','Think Award · F.U.N. League Tournament'], awards:['Finalist Alliance — 1st Team Selected','Think Award'], color:'#d92b2b' },
+  { year:'2024–25', name:'FLORIDA + EUROPEAN PREMIER', events:8, result:'European Premier', state:true, active:false,
+    summary:'Team 641 advanced from the F.U.N. League Tournament to the Florida Championship, then competed at the European Premier Event.',
+    highlights:['Inspire Award 2nd Place · F.U.N. League Tournament','Connect Award 3rd Place · Florida Championship','Scott Division Finalist Alliance — 1st Team Selected · Florida Championship'], awards:['Inspire Award 2nd Place','Connect Award 3rd Place','Scott Division Finalist Alliance — 1st Team Selected'], color:'#d92b2b' },
+  { year:'2025–26', name:'FLORIDA + WESTERN EDGE PREMIER', events:9, result:'Western Edge Premier', state:true, active:true,
+    summary:'The current record includes the F.U.N. League season, Florida Championship, and Western Edge Premier Event.',
+    highlights:['Finalist Alliance — Captain · F.U.N. League Tournament','Inspire Award 2nd Place · F.U.N. League Tournament','Control Award · Florida Championship'], awards:['Finalist Alliance — Captain','Inspire Award 2nd Place','Control Award'], color:'#ffc53d' },
 ];
 
 // NOTE: alumni profiles below were already present in the source content
@@ -100,10 +103,10 @@ function SeasonCard({s, idx, isActive, onClick}) {
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
           <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)'}}>{s.year}</div>
           {s.state&&<span style={{fontSize:'8.5px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'2px 7px',borderRadius:100,background:'rgba(217,43,43,0.1)',color:'#d92b2b',border:'1px solid rgba(217,43,43,0.22)'}}>State</span>}
-          {s.result==='Active Season'&&<span style={{fontSize:'8.5px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'2px 7px',borderRadius:100,background:'rgba(255,197,61,0.1)',color:'#ffc53d',border:'1px solid rgba(255,197,61,0.22)'}}>Live</span>}
+          {s.active&&<span style={{fontSize:'8.5px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.09em',padding:'2px 7px',borderRadius:100,background:'rgba(255,197,61,0.1)',color:'#ffc53d',border:'1px solid rgba(255,197,61,0.22)'}}>Current</span>}
         </div>
         <div style={{fontSize:'0.9rem',fontWeight:700,color:active?'var(--white)':'var(--muted-2)',marginBottom:4,letterSpacing:'-0.01em',lineHeight:1.3,transition:'color 0.2s'}}>{s.name}</div>
-        <div style={{fontSize:'0.75rem',color:'var(--muted)'}}>Season {s.season}</div>
+        <div style={{fontSize:'0.75rem',color:'var(--muted)'}}>{s.events} official {s.events===1?'event':'events'}</div>
       </div>
     </div>
   );
@@ -124,7 +127,7 @@ function SeasonDetail({s}) {
         <div style={{display:'flex',gap:6,alignItems:'center',paddingTop:4,flexWrap:'wrap'}}>
           <span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(255,255,255,0.05)',color:'var(--muted)',border:'1px solid var(--border-mid)'}}>{s.year}</span>
           {s.state&&<span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(217,43,43,0.1)',color:'#d92b2b',border:'1px solid rgba(217,43,43,0.22)'}}>State Championship</span>}
-          {s.result==='Active Season'&&<span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(255,197,61,0.1)',color:'#ffc53d',border:'1px solid rgba(255,197,61,0.22)'}}>Active</span>}
+          {s.active&&<span style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.1em',padding:'3px 9px',borderRadius:100,background:'rgba(255,197,61,0.1)',color:'#ffc53d',border:'1px solid rgba(255,197,61,0.22)'}}>Current season</span>}
         </div>
       </div>
       <p style={{fontSize:'0.935rem',color:'var(--muted-2)',lineHeight:1.85,marginBottom:28}}>{s.summary}</p>
@@ -138,17 +141,17 @@ function SeasonDetail({s}) {
       </div>
       <div style={{display:'flex',gap:24,marginTop:28,paddingTop:24,borderTop:'1px solid var(--border)',flexWrap:'wrap'}}>
         <div>
-          <div style={{fontSize:'1.4rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em'}}>Season {s.season}</div>
-          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>in program history</div>
+          <div style={{fontSize:'1.4rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em'}}>{s.events}</div>
+          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>official events</div>
         </div>
         <div style={{width:1,background:'var(--border)'}}/>
         <div>
-          <div style={{fontSize:'1.4rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em'}}>{s.members}</div>
-          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>roster size</div>
+          <div style={{fontSize:'1.4rem',fontWeight:800,color:'var(--white)',letterSpacing:'-0.02em'}}>{s.awards.length}</div>
+          <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>awards</div>
         </div>
         <div style={{width:1,background:'var(--border)'}}/>
         <div>
-          <div style={{fontSize:'1.4rem',fontWeight:800,color:s.state?'#d92b2b':s.result==='Active Season'?'#ffc53d':'var(--muted)',letterSpacing:'-0.02em'}}>{s.result}</div>
+          <div style={{fontSize:'1.4rem',fontWeight:800,color:s.state?'#d92b2b':s.active?'#ffc53d':'var(--muted)',letterSpacing:'-0.02em'}}>{s.result}</div>
           <div style={{fontSize:'10px',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--muted)',marginTop:4}}>season outcome</div>
         </div>
       </div>
@@ -163,10 +166,10 @@ function TimelineSection() {
       <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 32% 100% at 0% 50%, rgba(217,43,43,0.08) 0%, transparent 100%), radial-gradient(ellipse 32% 100% at 100% 50%, rgba(255,197,61,0.05) 0%, transparent 100%)'}}/>
       <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
         <div className="reveal" style={{marginBottom:56}}>
-          <LabelTagLocal>Five Seasons</LabelTagLocal>
-          <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,maxWidth:560,letterSpacing:'-.035em'}}>Every season,<br/>a different challenge</h2>
+          <LabelTagLocal>Official Competition Record</LabelTagLocal>
+          <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,maxWidth:620,letterSpacing:'-.035em'}}>Events entered.<br/>Awards earned.</h2>
         </div>
-        <div className="two-col" style={{gridTemplateColumns:'1fr 1.6fr',alignItems:'start'}}>
+        <div className="two-col two-col-wide-right" style={{alignItems:'start'}}>
           <div style={{display:'flex',flexDirection:'column',gap:8}}>
             {SEASONS.map((s,i)=>(<SeasonCard key={i} s={s} idx={i} isActive={active===i} onClick={()=>setActive(i)}/>))}
           </div>
@@ -314,19 +317,19 @@ function OriginSection() {
       <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
         <div className="two-col" style={{alignItems:'center'}}>
           <div className="reveal">
-            <LabelTagLocal>The Beginning</LabelTagLocal>
+            <LabelTagLocal>The Official Record</LabelTagLocal>
             <h2 style={{fontSize:'clamp(2.35rem,4vw,3.5rem)',lineHeight:1.04,letterSpacing:'-.035em',marginBottom:20}}>Where 641<br/>started</h2>
-            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85,marginBottom:16}}>TaterScots was founded in 2020 by a small group of Saint Andrew's School students who wanted to compete in FIRST Tech Challenge. The name — a nod to the school's Scottish heritage and their unofficial mascot, the potato — stuck from the first meeting.</p>
-            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85,marginBottom:16}}>The first season was a rookie trial run. The second season sent the team to the Florida State Championship for the first time. They've qualified three times since, and they're not finished.</p>
+            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85,marginBottom:16}}>Team 641's official FTC record begins with a 2007 rookie year. The TaterScots have now played 19 seasons, with 34 official events recorded since 2019.</p>
+            <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85,marginBottom:16}}>The recent record includes three consecutive Florida Championship appearances and eight awards from the 2023–24 through 2025–26 seasons.</p>
             <p style={{fontSize:'0.935rem',color:'var(--muted)',lineHeight:1.85}}>Saint Andrew's School in Boca Raton provides facilities, faculty advisors, and institutional support. Without that foundation, the program doesn't exist.</p>
           </div>
           <div className="reveal" data-delay="120" style={{display:'flex',flexDirection:'column',gap:12}}>
             {[
-              {year:'2020',event:'Program founded at Saint Andrew\'s School',accent:'var(--muted)'},
-              {year:'2022',event:'First Florida State Championship qualification',accent:'#d92b2b'},
-              {year:'2023',event:'Second consecutive State qualification',accent:'#d92b2b'},
-              {year:'2024',event:'Third State qualification · 18 engineering guides published',accent:'#d92b2b'},
-              {year:'2025',event:'INTO THE DEEP℠ season underway · two qualifier wins',accent:'#ffc53d'},
+              {year:'2007',event:'FTC rookie year',accent:'var(--muted)'},
+              {year:'2023',event:'Think Award · Finalist Alliance — 1st Team Selected',accent:'#d92b2b'},
+              {year:'2024',event:'Inspire 2nd · Connect 3rd · Division Finalist Alliance',accent:'#d92b2b'},
+              {year:'2025',event:'Inspire 2nd · Control Award · Finalist Alliance Captain',accent:'#ffc53d'},
+              {year:'Total',event:'19 seasons · 34 official events · 8 awards',accent:'var(--white)'},
             ].map((e,i)=>(
               <div key={i} style={{display:'flex',gap:16,alignItems:'flex-start'}}>
                 <div style={{width:44,flexShrink:0,paddingTop:1}}><div style={{fontSize:'0.78rem',fontWeight:700,color:e.accent}}>{e.year}</div></div>
@@ -375,7 +378,7 @@ function FAQItem({q,a,open,onClick}) {
 function FAQSection() {
   const [openIdx,setOpenIdx]=useState(0);
   const items=[
-    ['Why "TaterScots"?','A nod to Saint Andrew\'s Scottish heritage and the school\'s unofficial mascot, the potato — the name stuck from the team\'s first meeting in 2020.'],
+    ['Why "TaterScots"?','A nod to Saint Andrew\'s Scottish heritage and the school\'s unofficial mascot, the potato.'],
     ['Do I need experience to join?','No — most current members started with zero robotics background. New members shadow build sessions and pick up a subsystem as they go.'],
     ['How is the team funded?','Through Saint Andrew\'s School support and sponsorships. Our Guides section includes a sponsorship playbook for teams looking to build their own funding.'],
     ['Can other FTC teams reuse your guides and code?','Yes — every engineering guide we publish is free for any team or student to read, adapt, and reuse.'],
@@ -404,11 +407,11 @@ function App() {
 
       <header className="subpage-hero">
         <HeroMedia slot="HERO_ABOUT" accent="red"/>
-        <div aria-hidden="true" className="subpage-etch">2020</div>
+        <div aria-hidden="true" className="subpage-etch">2007</div>
         <div className="subpage-hero-inner">
           <div className="subpage-kicker"><b>02</b> Our story</div>
-          <h1 className="subpage-title">Five seasons.<br/><span className="accent">Still building.</span></h1>
-          <p className="subpage-deck">From a four-student idea to three Florida State Championship qualifications—the story of how Team 641 was built and where it goes next.</p>
+          <h1 className="subpage-title">Nineteen seasons.<br/><span className="accent">Still building.</span></h1>
+          <p className="subpage-deck">From a 2007 rookie year to 34 official events and eight recent awards—the competition record of Team 641.</p>
         </div>
       </header>
 

@@ -29,6 +29,7 @@ const STAT_ICON_PATHS = {
   trophy: [{tag:'path',d:'M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4zM7 4H4a1 1 0 00-1 1v1a4 4 0 004 4M17 4h3a1 1 0 011 1v1a4 4 0 01-4 4'}],
   heart: [{tag:'path',d:'M12 20.5s-7.5-4.7-10-9.3C.5 7.8 2.3 4.5 5.6 4a5 5 0 016.4 2 5 5 0 016.4-2c3.3.5 5.1 3.8 3.6 7.2-2.5 4.6-10 9.3-10 9.3z'}],
   calendar: [{tag:'rect',x:'3',y:'4',width:'18',height:'18',rx:'3'},{tag:'path',d:'M16 2v4M8 2v4M3 10h18'}],
+  flag: [{tag:'path',d:'M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z'},{tag:'path',d:'M4 22V15'}],
   book: [{tag:'path',d:'M4 19.5A2.5 2.5 0 016.5 17H20'},{tag:'path',d:'M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z'}],
 };
 function StatIcon({ type }) {

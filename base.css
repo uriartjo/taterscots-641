@@ -68,7 +68,8 @@ a{color:inherit}
 .auto-grid.cards-sm{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .auto-grid.cards-lg{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-@media (max-width:860px){.two-col{grid-template-columns:1fr;gap:40px}}
+.two-col-wide-right{grid-template-columns:1fr 1.6fr}
+@media (max-width:860px){.two-col,.two-col-wide-right{grid-template-columns:1fr;gap:40px}}
 
 /* Asymmetric bento grid — size communicates hierarchy instead of a
    "Featured" badge stacked on top of an otherwise-uniform tile. */

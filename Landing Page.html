@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TaterScots 641</title>
 <link rel="icon" type="image/png" href="1776100755044_TaterScots_E.png">
-<meta name="description" content="TaterScots 641 — a FIRST Tech Challenge robotics team from Saint Andrew's School in Boca Raton, FL. Three-time state qualifiers designing, building, and programming a new robot every season.">
+<meta name="description" content="TaterScots 641 — a FIRST Tech Challenge robotics team from Saint Andrew's School in Boca Raton, FL, with 19 seasons, 34 official events, and eight recent awards.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="TaterScots 641 — FIRST Tech Challenge Team">
-<meta property="og:description" content="A FIRST Tech Challenge robotics team from Saint Andrew's School in Boca Raton, FL. Three-time state qualifiers.">
+<meta property="og:description" content="A FIRST Tech Challenge robotics team from Saint Andrew's School in Boca Raton, FL, competing since 2007.">
 <meta property="og:image" content="1776100755044_TaterScots_E.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="tokens.css">
@@ -16,7 +16,7 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="home.css?v=20260827-calendar-editorial">
 </head>
 <body>
 <div id="root"></div>
@@ -32,6 +32,7 @@ const { useState, useEffect, useRef } = React;
 
 /* ── Calendar (Google Calendar via ICS proxy) ── */
 const ICAL_URL = 'https://raspy-fog-fe7a.vespar.workers.dev/';
+const CALENDAR_SUBSCRIBE_URL = 'https://calendar.google.com/calendar/u/0?cid=Y183YTljNGFlYjU0ZDcyZmM5ZmM5YmRiODc1YzlmZWMzMmExOWNmNjY1YTEwMWVlNzYzYWRhMDMyNTZlZGY2ODY1QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20';
 function parseICalDate(line) {
   const parts = line.split(':');
   const value = parts[parts.length - 1].trim();
@@ -129,9 +130,9 @@ function Hero() {
             <button className="btn-ghost" onClick={() => document.getElementById('season').scrollIntoView({behavior:'smooth'})}>Explore the season</button>
           </div>
           <div className="hero-proof" aria-label="Team highlights">
-            <div><strong>3×</strong><span>State qualifier</span></div>
-            <div><strong>200+</strong><span>Students reached</span></div>
-            <div><strong>5</strong><span>Seasons competing</span></div>
+            <div><strong>3×</strong><span>Florida Championship</span></div>
+            <div><strong>8</strong><span>Official awards</span></div>
+            <div><strong>19</strong><span>Seasons played</span></div>
           </div>
         </div>
       </div>
@@ -152,7 +153,7 @@ function Stats() {
 }
 
 function Ticker() {
-  const items = ['FIRST Tech Challenge', 'REV Robotics', 'goBILDA', '3× State Advancing', 'INTO THE DEEP 2024–25', 'Java · CAD · FEA · Vision', 'Boca Raton, Florida'];
+  const items = ['FIRST Tech Challenge', 'REV Robotics', 'goBILDA', '3× Florida Championship', '8 Official Awards', '19 Seasons Played', 'Boca Raton, Florida'];
   const d = [...items, ...items];
   return (
     <div style={{borderBottom:'1px solid var(--border)',overflow:'hidden',WebkitMaskImage:'linear-gradient(90deg,transparent,black 8%,black 92%,transparent)',maskImage:'linear-gradient(90deg,transparent,black 8%,black 92%,transparent)',padding:'15px 0'}}>
@@ -213,14 +214,10 @@ function Season() {
   return (
     <section id="season" className="section-pad season-band">
       <div className="home-shell season-grid">
-        <div className="season-visual reveal">
-          <img src={window.MEDIA.SEASON_SPREAD.src} alt="TaterScots with their robot and medals at the Florida State Championship"/>
-          <div className="season-result"><strong>3×</strong><span>Florida State<br/>Championship qualifier</span></div>
-        </div>
-        <div className="season-copy reveal" data-delay="100">
-          <div className="section-label"><b>02</b> The season</div>
-          <h2>Every season starts at zero.</h2>
-          <p>New challenge. New robot. New problems worth solving. We have qualified for the Florida State Championship three times—and return each year knowing there is more to prove.</p>
+        <div className="season-copy reveal">
+          <div className="section-label"><b>02</b> Team calendar</div>
+          <h2>Know what's next.</h2>
+          <p>Practices, team meetings, competitions, and outreach—our live schedule keeps students, families, and supporters on the same page.</p>
           <div className="team-calendar" aria-label="TaterScots 641 team calendar">
             <div className="calendar-head">
               <div className="calendar-identity">
@@ -229,7 +226,7 @@ function Season() {
               </div>
               <span className="calendar-live"><i/>Live schedule</span>
             </div>
-            <p className="calendar-intro">Practices, team meetings, competitions, and outreach—all in one place.</p>
+            <p className="calendar-intro">The next four dates from the official TaterScots calendar.</p>
             <div className="event-stack" aria-live="polite">
               {loading ? <div className="calendar-state">Loading the team calendar…</div>
                 : events.length ? events.slice(0,4).map((event,i) => {
@@ -253,7 +250,17 @@ function Season() {
             </div>
             <div className="calendar-foot"><span>Official schedule for students, families, and supporters</span><span aria-hidden="true">FTC · 641</span></div>
           </div>
-          <a className="btn-primary" href="About.html">Follow the season <span aria-hidden="true">→</span></a>
+          <a className="btn-primary" href={CALENDAR_SUBSCRIBE_URL} target="_blank" rel="noreferrer" aria-label="Follow the season by subscribing to the TaterScots Google Calendar">Follow the season <span aria-hidden="true">→</span></a>
+        </div>
+        <div className="season-aside-column">
+          <div className="season-visual reveal" data-delay="100">
+            <img src={window.MEDIA.SEASON_SPREAD.src} alt="TaterScots with their robot and medals at the Florida State Championship"/>
+            <div className="season-result"><strong>3×</strong><span>Florida Championship<br/>appearances</span></div>
+          </div>
+          <div className="season-aside-copy reveal" data-delay="160">
+            <div className="section-label"><b>641</b> Between the dates</div>
+            <h3>The work happens<br/><span className="accent">between events.</span></h3>
+          </div>
         </div>
       </div>
     </section>

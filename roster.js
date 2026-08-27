@@ -116,8 +116,8 @@ window.CONTACT_EMAIL = 'joey.uriarte@saintandrews.net';
    (Home's 4-stat bar vs. About's 5-stat banner). */
 window.SITE_STATS = [
   { n: 11, s: '', l: 'Team Members', ic: 'users' },
-  { n: 3,  s: '×', l: 'State Championships', ic: 'trophy' },
-  { n: 200, s: '+', l: 'Students Reached', ic: 'heart' },
-  { n: 5,  s: '', l: 'Seasons Competing', ic: 'calendar' },
-  { n: 18, s: '', l: 'Open Guides', ic: 'book' },
+  { n: 19, s: '', l: 'Seasons Played', ic: 'calendar' },
+  { n: 34, s: '', l: 'Official Events', ic: 'flag' },
+  { n: 8,  s: '', l: 'Awards', ic: 'trophy' },
+  { n: 3,  s: '×', l: 'Florida Championships', ic: 'trophy' },
 ];
