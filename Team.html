@@ -37,25 +37,6 @@ function LabelTagLocal({ children }) {
   );
 }
 
-function JoinCTA() {
-  return (
-    <div className="reveal" style={{maxWidth:'var(--max-width)',margin:'0 auto 96px',padding:'0 32px'}}>
-      <div style={{background:'linear-gradient(120deg,rgba(217,43,43,.14),rgba(255,197,61,.035))',border:'1px solid rgba(217,43,43,.3)',borderRadius:20,padding:'46px 48px',display:'flex',alignItems:'center',justifyContent:'space-between',gap:24,flexWrap:'wrap',position:'relative',overflow:'hidden'}}>
-        <div>
-          <div className="editorial-section-label"><b>Next</b> Join the build</div>
-          <div style={{fontFamily:'Inter',fontSize:'clamp(1.55rem,3vw,2.35rem)',fontWeight:800,color:'var(--white)',marginBottom:8,letterSpacing:'-.035em'}}>Want your name on this roster?</div>
-          <div style={{fontSize:'0.9rem',color:'var(--muted)',lineHeight:1.7}}>We're always looking for CAD, code, fabrication, and outreach help — no experience required.</div>
-        </div>
-        <a href={`mailto:${window.CONTACT_EMAIL}`} style={{fontFamily:'Inter',fontSize:'0.92rem',fontWeight:600,whiteSpace:'nowrap',padding:'13px 26px',borderRadius:11,border:'1px solid var(--red)',background:'var(--red)',color:'#fff',cursor:'pointer',display:'inline-flex',alignItems:'center',gap:9,textDecoration:'none',transition:'transform 0.2s,background 0.2s'}}
-          onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.background='var(--red-bright)'}} onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.background='var(--red)'}}>
-          Ask about joining
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  );
-}
-
 function App() {
   window.useReveal();
   const roster = window.ROSTER || [];
@@ -70,23 +51,52 @@ function App() {
 
       <header className="subpage-hero">
         <HeroMedia slot="HERO_TEAM" accent="red"/>
-        <div aria-hidden="true" className="subpage-etch">TEAM</div>
+        <div aria-hidden="true" className="subpage-etch">641</div>
         <div className="subpage-hero-inner">
           <div className="subpage-kicker"><b>03</b> The people</div>
           <h1 className="subpage-title">Meet the<br/><span className="accent">builders.</span></h1>
           <p className="subpage-deck">{studentCount} students, one mentor, and one shared machine. Every role matters—from machinist to programmer to strategist.</p>
+          <div className="team-hero-status" aria-label="Team roster details">
+            <span><b>Roster</b> 2026 season</span>
+            <span><b>Team</b> FTC 641</span>
+            <span><b>Base</b> Boca Raton, FL</span>
+          </div>
         </div>
       </header>
 
-      <section style={{padding:'64px 0 96px',position:'relative',overflow:'hidden'}}>
-        <div style={{position:'absolute',inset:0,pointerEvents:'none',background:'radial-gradient(ellipse 28% 100% at 0% 50%, rgba(217,43,43,0.07) 0%, transparent 100%), radial-gradient(ellipse 28% 100% at 100% 50%, rgba(255,197,61,0.045) 0%, transparent 100%)'}}/>
-        <div style={{maxWidth:'var(--max-width)',margin:'0 auto',padding:'0 32px',position:'relative',zIndex:1}}>
+      <section className="team-roster-section">
+        <div className="team-roster-shell">
+          <div className="team-roster-intro reveal">
+            <div className="team-roster-main">
+              <div className="editorial-section-label"><b>01</b> Active roster</div>
+              <h2><span>{studentCount}</span> builders.<br/>One standard.</h2>
+              <div className="team-roster-brief">
+                <span>Built across disciplines</span>
+                <p>Engineering, code, strategy, and outreach converge into one competition team. Select a member to explore their role.</p>
+              </div>
+            </div>
+            <div className="team-roster-aside">
+              <a className="team-roster-join" href={`mailto:${window.CONTACT_EMAIL}`}>
+                <span className="team-roster-join-head">
+                  <small>Join the build</small>
+                  <i>Open call / 2026</i>
+                </span>
+                <span className="team-roster-join-copy">
+                  <strong>Want your name on the roster?</strong>
+                  <em>No experience required—just curiosity and the willingness to build.</em>
+                </span>
+                <span className="team-roster-join-action">
+                  <span>Ask about joining</span>
+                  <b aria-hidden="true">↗</b>
+                </span>
+              </a>
+            </div>
+          </div>
           <RosterGrid/>
         </div>
       </section>
 
-      <JoinCTA/>
-      <Footer/>
+      <Footer compact/>
     </div>
   );
 }
