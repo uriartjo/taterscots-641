@@ -148,6 +148,10 @@
 <script type="text/babel">
 const { useState, useEffect, useRef, useMemo } = React;
 
+const formatGroupNum = num => /^\d+$/.test(String(num))
+  ? String(num).padStart(2,'0')
+  : String(num);
+
 /* ──────────────────────────────────────────
    SECTION ICONS
 ────────────────────────────────────────── */
@@ -728,7 +732,7 @@ function MobileChapterNav({activeGroup, matchedIds}){
         <span className="chapter-toggle" aria-hidden="true">+</span>
       </button>
       {open&&<div className="mobile-chapter-menu" id="mobile-chapter-menu">
-        {GROUPS.filter(g=>!matchedIds||matchedIds.has(g.id)).map(g=><a href={`#${g.id}`} key={g.id} className={g.id===activeGroup?'active':''} onClick={()=>setOpen(false)}><span className="num">{String(+g.num).padStart(2,'0')}</span><span>{g.title}</span></a>)}
+        {GROUPS.filter(g=>!matchedIds||matchedIds.has(g.id)).map(g=><a href={`#${g.id}`} key={g.id} className={g.id===activeGroup?'active':''} onClick={()=>setOpen(false)}><span className="num">{formatGroupNum(g.num)}</span><span>{g.title}</span></a>)}
       </div>}
     </nav>
   );
@@ -868,7 +872,7 @@ function App() {
                   const meta = GROUP_META[g.id];
                   return(
                   <div className="section-block reveal" id={g.id} key={g.id} data-delay={gi*30} style={{'--accent':meta.color}}>
-                    <div className="chapter-etch" aria-hidden="true">{String(+g.num).padStart(2,'0')}</div>
+                    <div className="chapter-etch" aria-hidden="true">{formatGroupNum(g.num)}</div>
                     <h2>
                       <span className="group-icon-badge" style={{background:`rgba(${meta.rgb},0.12)`,border:`1px solid rgba(${meta.rgb},0.3)`}}>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={meta.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{meta.icon}</svg>
